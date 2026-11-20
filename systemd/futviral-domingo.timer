@@ -1,0 +1,9 @@
+[Unit]
+Description=futviral — domingo às 09:00
+
+[Timer]
+OnCalendar=Sun *-*-* 09:00:00
+Persistent=false
+
+[Install]
+WantedBy=timers.target

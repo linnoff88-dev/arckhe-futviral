@@ -1,0 +1,226 @@
+#!/usr/bin/env bash
+# Rodada automática do futviral (cópia do advviral adaptada para futebol): coleta → transcrição → roteiro (auto/ia.yaml, assinatura) → conferência → avatar → vídeo → bot v3.
+# uso: auto/rodar.sh <diario|semanal|domingo> [AAAA-MM-DD da rodada, padrão hoje]
+#   diario  = vídeos de ontem e anteontem ainda não usados (40–60 s)
+#   semanal = balanço da semana (7 dias até ontem), 90 s a 2 min   [sábado]
+# Teste: SEM_AVATAR=1 pula o HeyGen; SEM_BOT=1 só simula o envio (e não publica); SEM_LONGO=1 pula o longo.
+# Publica no YouTube Radar Viral (lives24) e manda sempre ao bot v3 (auto/publicar.sh). Sáb/dom: + LONGO 16:9 (auto/longo.sh).
+#   domingo = a semana que passou + o que eles esperam para a próxima, ~90 s   [domingo]
+# Sempre manda algo ao bot v3: o vídeo (com o link do lives24), "sem pauta" ou "falhou em X".
+set -uo pipefail
+RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
+MODO="${1:?modo: diario|semanal|domingo}"; DIA="${2:-$(date +%F)}"
+TX="${TX:-$HOME/projetos/output/futviral/coleta/tx}"
+MAXDUR="${MAXDUR:-4500}"   # não transcreve vídeo/live acima de 75 min
+BOT="$HOME/projetos/refazvideo/ferramentas/enviar_bot_v3.mjs"
+DRY=""; [ "${SEM_BOT:-}" = 1 ] && DRY=--dry-run
+# VALIDAR=1: edição de teste para o Nei aprovar (pasta -validacao, nunca vai ao YouTube nem marca vídeos como usados)
+ED="$RAIZ/edicoes/$DIA-$MODO${VALIDAR:+-validacao}"; mkdir -p "$ED/img"
+LOG="$ED/rodada.log"; exec >>"$LOG" 2>&1
+# placar da máquina (~/projetos/wifi/scripts/rodada, 09/11/2026): início e fim de TODA rodada (publicado | sem_pauta | falhou | ocupado | ok).
+# Sem o comando (VPS6) não faz nada. RODADA_UNIDADE=teste-... nos ensaios (não suja o placar do timer). O trap grava "falhou" se a
+# saída não passou por fim(); publicado só com URL do YouTube de verdade.
+RODADA="$HOME/projetos/wifi/scripts/rodada"; UNIDADE="${RODADA_UNIDADE:-$(basename "$RAIZ")-$MODO}"; EDN="$(basename "$ED")"; FIM_GRAVADO=""
+placar() { if [ -x "$RODADA" ]; then "$RODADA" "$@" || true; fi; }
+fim() { FIM_GRAVADO=1; placar fim "$UNIDADE" "$1" --edicao "$EDN" "${@:2}"; }
+trap 'rc=$?; [ -z "$FIM_GRAVADO" ] && placar fim "$UNIDADE" falhou --edicao "$EDN" --motivo "saída inesperada (código $rc)"' EXIT
+placar inicio "$UNIDADE" "$EDN"
+VAGA="$RAIZ/motor/vaga.sh"; M="$(basename "$RAIZ")"  # passos pesados na vaga da máquina (motor/vaga.sh → wifi/scripts/fila-vaga); 75 = ocupada
+exec 8>"$RAIZ/auto/.rodando"; flock -n 8 || { echo "outra rodada em andamento"; fim ocupado --motivo "outra rodada do motor em andamento"; exit 0; }
+echo "=== $(date '+%F %T') $MODO $DIA"
+[ -z "${VALIDAR:-}" ] && grep -qx "$DIA $MODO" "$RAIZ/auto/pular.txt" 2>/dev/null && { echo "pulado (auto/pular.txt)"; fim sem_pauta --motivo "pulado (auto/pular.txt)"; exit 0; }
+d() { date -d "$DIA $1 day" +%Y%m%d; }
+DATA_BR=$(date -d "$DIA" +%d/%m/%Y)
+
+avisar() {  # manda texto ao bot (como arquivo .txt com legenda) e sai; placar: código 0 = sem_pauta, senão falhou (ou o 3º argumento)
+  echo "$1" > "$ED/aviso.txt"; rm -f "$ED/aviso.txt.envio-v3.json"
+  node "$BOT" $DRY "$ED/aviso.txt" "futviral · $MODO · $DATA_BR
+$1" || echo "falhou o envio do aviso"
+  local r="${3:-}"; [ -n "$r" ] || { [ "${2:-1}" = 0 ] && r=sem_pauta || r=falhou; }
+  fim "$r" --motivo "$(printf %s "$1" | tr '\n' ' ' | cut -c1-200)"
+  echo "AVISO: $1"; exit "${2:-1}"
+}
+# máquina ocupada (a vaga não abriu a tempo, saída 75): avisa e sai limpo; a pauta não é marcada como usada
+ocupado() { avisar "máquina ocupada: $1 não pegou vaga a tempo (fila-vaga saiu 75); a pauta não foi usada" 0 ocupado; }
+
+AVISO_LONGO=""  # CTA é só o inema.club (Nei, 11/10/2026): nada de mandar para o vídeo longo / canal do YouTube
+INSTR_L=""
+case "$MODO" in
+  diario)  DE=$(d -2); ATE=$(d -1); MAXV=10  # 1 por canal (resumo dos dez, Nei 13/10/2026)
+    INSTR="DIÁRIO de $DATA_BR: resumo do que os dez influenciadores publicaram nos últimos dias (datas no videos.tsv). Vídeo de 2 a 3 min, de 14 a 20 falas, de 300 a 400 palavras no total. Pelo menos cinco assuntos, um por influenciador sempre que der, o mais forte primeiro, cada um explicado inteiro (contexto, o que ele disse, o que muda pra quem assiste)." ;;
+  semanal) DE=$(d -7); ATE=$(d -1); MAXV=12
+    INSTR="SEMANAL (sábado, $DATA_BR): balanço da semana de $(date -d "$DIA -7 day" +%d/%m) a $(date -d "$DIA -1 day" +%d/%m). Vídeo de 2 a 3 min, de 14 a 20 falas, de 300 a 400 palavras. Resumo dos dez: pelo menos cinco assuntos, um por influenciador sempre que der, cada um explicado inteiro (contexto, o que ele disse, o que muda pra quem assiste). O mais forte primeiro. $AVISO_LONGO"
+    INSTR_L="SEMANAL (sábado, $DATA_BR): a semana de $(date -d "$DIA -7 day" +%d/%m) a $(date -d "$DIA -1 day" +%d/%m) explicada. Vídeo de 5,5 a 7 min. Um capítulo por influenciador com assunto forte; mostre divergências entre eles." ;;
+  domingo) DE=$(d -7); ATE=$(d -1); MAXV=12
+    INSTR="DOMINGO ($DATA_BR): o que vem na próxima semana do futebol, segundo eles. Vídeo de 2 a 3 min, de 14 a 20 falas, de 300 a 400 palavras. Resumo dos dez: pelo menos cinco assuntos, um por influenciador sempre que der, cada um explicado inteiro (contexto, o que ele disse, o que muda pra quem acompanha). Comece pelo jogo ou pela decisão mais forte que vem aí e foque no que ELES apontaram: clássicos, decisões de copa, risco de rebaixamento, técnico ameaçado, negociações em andamento, sempre atribuídos. $AVISO_LONGO"
+    INSTR_L="DOMINGO ($DATA_BR): a semana do futebol explicada e o que vem a seguir. Vídeo de 5,5 a 7 min. Um capítulo por influenciador: o jogo, a negociação ou a polêmica que ELE apontou, o raciocínio dele e os números; tabela e sequência de jogos viram timeline; divergências entre eles com compare." ;;
+  *) echo "modo inválido"; exit 2 ;;
+esac
+
+# 1. coleta (metadados) e escolha dos vídeos
+NLISTA=8; [ "$MODO" != diario ] && NLISTA=16  # alguns escritórios publicam mais de 1 vídeo/dia
+escolher() {
+python3 "$RAIZ/coleta/listar.py" "$DE" "$ATE" "$ED/todos.tsv" "$NLISTA" || avisar "falhou a listagem dos canais (yt-dlp)"
+# base do que já foi publicado (auto/usados.tsv): o diário nunca repete um vídeo já citado
+USADOS="$ED/usados-ids.txt"; python3 "$RAIZ/auto/usados.py" ids > "$USADOS" || avisar "falhou a leitura de auto/usados.tsv"
+python3 - "$ED/todos.tsv" "$ED/videos.tsv" "$MODO" "$USADOS" "$MAXDUR" "$MAXV" <<'EOF'
+import sys
+todos, saida, modo, usados, maxdur, maxv = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4], int(sys.argv[5]), int(sys.argv[6])
+ja = set(open(usados).read().split()) if modo == "diario" else set()
+ls = [l.rstrip("\n").split("\t") for l in open(todos) if l.count("\t") >= 6]
+ok = [c for c in ls if c[2] not in ja and c[3].isdigit() and 120 <= int(c[3]) <= maxdur]
+ok.sort(key=lambda c: -int(c[4]) if c[4].isdigit() else 0)
+por, esc = {}, []
+for rodada in (1, 2, 3):  # rodízio: o mais visto de cada canal primeiro (todas as fontes entram), depois completa até 3 por canal
+    for c in ok:
+        if c not in esc and por.get(c[0], 0) < rodada and len(esc) < maxv:
+            esc.append(c); por[c[0]] = por.get(c[0], 0) + 1
+open(saida, "w").write("".join("\t".join(c) + "\n" for c in esc))
+print(len(ls), "listados ·", len(esc), "escolhidos")
+EOF
+}
+# REUSAR_ROTEIRO=1 reaproveita a lista de vídeos da edição: escolher de novo trocava os vídeos e o roteiro aprovado deixava de valer (26/10/2026)
+if [ "${REUSAR_ROTEIRO:-}" = 1 ] && [ -s "$ED/videos.tsv" ]; then
+  echo "reusando o videos.tsv da edição"
+else
+escolher
+# resumo dos dez com 5+ assuntos: se ontem+anteontem teve menos de 5 canais, amplia o diário para 5 dias (os já usados continuam fora)
+if [ "$MODO" = diario ] && [ "$(cut -f1 "$ED/videos.tsv" 2>/dev/null | sort -u | wc -l)" -lt 5 ]; then
+  DE=$(d -5); echo "menos de 5 canais em 2 dias: janela ampliada para $(date -d "$DE" +%d/%m)"; escolher
+fi
+fi
+[ -s "$ED/videos.tsv" ] || avisar "sem vídeo novo dos canais entre $(date -d "$DE" +%d/%m) e $(date -d "$ATE" +%d/%m)" 0
+
+# 2. transcrição local (inemavox / Whisper) + miniaturas
+IDS=$(cut -f3 "$ED/videos.tsv" | tr '\n' ' ')
+python3 - "$RAIZ/canais.json" "$ED/videos.tsv" "$TX" <<'EOF'
+import json, sys, os
+lang = {c["handle"]: c.get("lang", "pt") for c in json.load(open(sys.argv[1]))["canais"]}
+for l in open(sys.argv[2]):
+    c = l.rstrip("\n").split("\t"); d = os.path.join(sys.argv[3], c[2]); os.makedirs(d, exist_ok=True)
+    open(os.path.join(d, "lang"), "w").write(lang.get(c[0], "pt"))
+EOF
+TX="$TX" systemd-run --user --scope -q -p MemoryMax=40G timeout 7200 bash "$RAIZ/coleta/transcrever.sh" $IDS
+[ "$?" = 75 ] && ocupado "o Whisper (transcrição)"
+: > "$ED/transcritos.txt"
+for id in $IDS; do
+  [ -s "$TX/$id/transcript.txt" ] && echo "$id" >> "$ED/transcritos.txt"
+  [ -s "$ED/img/$id.jpg" ] || curl -sf -m 30 -o "$ED/img/$id.jpg" "https://i.ytimg.com/vi/$id/maxresdefault.jpg" \
+    || curl -sf -m 30 -o "$ED/img/$id.jpg" "https://i.ytimg.com/vi/$id/hqdefault.jpg" || true
+done
+[ -s "$ED/transcritos.txt" ] || avisar "nenhuma transcrição saiu (download ou Whisper falhou)"
+NT=$(wc -l < "$ED/transcritos.txt"); export MIN_ASSUNTOS=$(( NT < 5 ? NT : 5 ))
+INSTR="$INSTR Mínimo de assuntos nesta edição: $MIN_ASSUNTOS ($NT vídeos transcritos disponíveis)."
+if [ "$MODO" = diario ]; then
+  JA=$(python3 "$RAIZ/auto/usados.py" recentes "$DIA" 7)
+  [ -n "$JA" ] && INSTR="$INSTR
+Já publicados no diário nos últimos 7 dias (data · influenciador · assunto). Os vídeos deles já estão fora. O mesmo assunto PODE voltar pela boca de OUTRO influenciador, porque é outro ponto de vista: nesse caso ligue os dois na fala («o Fulano também falou sobre isso», «no dia tal o Beltrano disse X; agora o Fulano vê diferente») e mostre o que ele traz de novo ou de diferente. O que não pode é recontar a mesma coisa do mesmo jeito.
+$JA"
+fi
+cp "$RAIZ/motor/assets/cta.jpg" "$RAIZ/motor/assets/avatar-teste.jpg" "$ED/img/"
+
+# 3. roteiro pelo motor de auto/ia.yaml (assinatura) + portão de fatos, com uma correção
+PROMPT=$(python3 - "$RAIZ/auto/roteiro.md" "$ED" "$TX" "$RAIZ" "$MODO" "$DATA_BR" "$INSTR" <<'EOF'
+import sys
+t = open(sys.argv[1]).read()
+for k, v in {"{ED}": sys.argv[2], "{TX}": sys.argv[3], "{RAIZ}": sys.argv[4], "{MODO}": sys.argv[5],
+             "{DATA}": sys.argv[6], "{DATA_BR}": sys.argv[6], "{INSTRUCAO_MODO}": sys.argv[7]}.items():
+    t = t.replace(k, v)
+print(t)
+EOF
+)
+roteirizar() {
+  ( cd "$ED" && timeout 10800 python3 "$RAIZ/auto/roteiro_ia.py" "roteiro_curto_$MODO" "$1" --tx "$TX" > "$ED/claude.log" 2>&1 )
+}
+# REUSAR_ROTEIRO=1: refaz só avatar/vídeo/publicação com o roteiro.json + base.md que já estão na edição (corrigido à mão)
+if [ "${REUSAR_ROTEIRO:-}" = 1 ] && [ -s "$ED/roteiro.json" ] && [ -s "$ED/base.md" ]; then
+  echo "reusando o roteiro.json da edição"; rm -f "$ED/SEM_PAUTA.txt"
+else
+rm -f "$ED/SEM_PAUTA.txt" "$ED/roteiro.json" "$ED/base.md"
+rm -rf "$ED/avatar"  # roteiro novo = avatar novo (o avatar_heygen.sh reaproveita blocos já enviados)
+roteirizar "$PROMPT" || avisar "o motor de IA (auto/ia.yaml) falhou ao escrever o roteiro ($(tail -c 200 "$ED/claude.log"))"
+fi
+[ -f "$ED/SEM_PAUTA.txt" ] && avisar "sem pauta: $(cat "$ED/SEM_PAUTA.txt")" 0
+if ! python3 "$RAIZ/auto/checar.py" "$ED" "$TX" > "$ED/checar.log"; then
+  roteirizar "$PROMPT
+
+## CORREÇÃO
+A conferência automática reprovou os arquivos que você gravou. Corrija só o que está abaixo, reescrevendo base.md e roteiro.json. Trecho é cópia literal do transcript; número na fala vai por extenso.
+$(cat "$ED/checar.log")" || true
+  python3 "$RAIZ/auto/checar.py" "$ED" "$TX" > "$ED/checar.log" || avisar "roteiro reprovado na conferência de fatos:
+$(grep PROBLEMA "$ED/checar.log" | head -5)"
+fi
+cat "$ED/checar.log"
+
+# 4. avatar do Nei (HeyGen estúdio); se falhar, versão com a foto e a voz do Nei (chatterbox)
+NOTA=""
+#    retempo/emenda (dentro do avatar_heygen.sh), render e voz local passam pela vaga da máquina; a espera do HeyGen fica fora
+if [ "${SEM_AVATAR:-}" != 1 ] && bash "$RAIZ/motor/avatar_heygen.sh" "$ED" "FUTVIRAL-$DIA-$MODO${VALIDAR:+-validacao}" > "$ED/avatar.log" 2>&1 \
+   && python3 "$RAIZ/motor/gerar_cena.py" "$ED" --avatar \
+   && RENDER_ESPERA_MIN="${RENDER_ESPERA_MIN:-60}" bash "$VAGA" render "$M-render" bash "$RAIZ/motor/compor_avatar.sh" "$ED" "$ED/video.mp4"; then
+  echo "vídeo com avatar ok"
+else
+  [ "$?" = 75 ] && ocupado "o retempo/render do vídeo com avatar"
+  if [ "${SEM_AVATAR:-}" = 1 ]; then NOTA="(teste sem avatar)"; else NOTA="(sem avatar: $(grep -h ERRO "$ED/avatar.log" 2>/dev/null | tail -1 | cut -c1-150); versão com foto)"; fi
+  echo "avatar falhou $NOTA"
+  if GPU_ESPERA_MIN="${GPU_ESPERA_MIN:-60}" bash "$VAGA" gpu "$M-tts" python3 "$RAIZ/motor/narrar.py" "$ED" 1.12 && python3 "$RAIZ/motor/gerar_cena.py" "$ED" --livre \
+    && RENDER_ESPERA_MIN="${RENDER_ESPERA_MIN:-60}" bash "$VAGA" render "$M-render" bash "$RAIZ/motor/montar.sh" "$ED" "$ED/video.mp4"; then :
+  else [ "$?" = 75 ] && ocupado "a voz local/render da versão com foto"; avisar "falhou também a versão com foto (ver $LOG)"; fi
+fi
+
+# 5. publica no YouTube Radar Viral (lives24) e manda SEMPRE ao bot v3 (autorizado pelo Nei em 10/10/2026)
+#    a versão com foto (avatar falhou) e os testes só vão ao bot
+SUG=""; [ -s "$ED/sugestao.txt" ] && SUG="
+Sugestão de influenciador: $(head -c 300 "$ED/sugestao.txt")"
+SEMYT=""; { [ -n "$NOTA" ] || [ -n "$DRY" ] || [ -n "${VALIDAR:-}" ]; } && SEMYT=1
+PUB=$(SEM_YT="$SEMYT" SEM_BOT="${SEM_BOT:-}" bash "$RAIZ/auto/publicar.sh" "$ED/video.mp4" "$ED" "$MODO · $DATA_BR $NOTA" "$SUG" | tee -a /dev/stderr)  # -a: o stderr é o rodada.log (sem -a o tee o truncaria)
+# placar: publicado só com URL do YouTube de verdade (código 0 ≠ publicou)
+URL=$(printf '%s\n' "$PUB" | grep -o 'https://www.youtube.com/watch?v=[A-Za-z0-9_-]*\|https://youtu.be/[A-Za-z0-9_-]*' | tail -1)
+if [ -n "$URL" ]; then RES=publicado; MOT=""
+elif printf '%s\n' "$PUB" | grep -q '^pendente:'; then RES=ok; MOT="pronto, $(printf '%s\n' "$PUB" | grep '^pendente:' | tail -1 | cut -c1-150)"
+elif [ -n "$DRY" ] || [ -n "${VALIDAR:-}" ] || [ "${SEM_AVATAR:-}" = 1 ]; then RES=ok; MOT="ensaio sem YouTube (SEM_BOT/VALIDAR/SEM_AVATAR)"
+elif [ -n "$NOTA" ]; then RES=falhou; MOT="$(printf %s "$NOTA" | cut -c1-200); só foi ao bot"
+else RES=falhou; MOT="não publicou no YouTube: $(printf '%s\n' "$PUB" | grep 'NÃO publicou' | tail -1 | cut -c1-150)"; fi
+# registra só os vídeos CITADOS no base.md (o escolhido que ficou de fora continua disponível amanhã) + o assunto
+# só registra o que vai ao ar: teste com foto (SEM_AVATAR) ou avatar que falhou não marca os vídeos como usados (26/10/2026)
+[ -z "$SEMYT" ] && python3 "$RAIZ/auto/usados.py" registrar "$ED" "$DIA" "$MODO"
+
+# 6. sábado e domingo: o LONGO 16:9 explicado (não derruba o curto: falha vira aviso no bot)
+if [ -n "$INSTR_L" ] && [ "${SEM_LONGO:-}" != 1 ]; then
+  EL="$RAIZ/edicoes/$DIA-$MODO-longo"; mkdir -p "$EL/img"
+  cp "$ED/videos.tsv" "$ED/transcritos.txt" "$EL/"; cp "$ED"/img/*.jpg "$EL/img/"
+  PL=$(python3 - "$RAIZ/auto/roteiro-longo.md" "$EL" "$TX" "$RAIZ" "$MODO" "$DATA_BR" "$INSTR_L" "$ED" <<'PY'
+import sys
+t = open(sys.argv[1]).read()
+for k, v in {"{ED}": sys.argv[2], "{TX}": sys.argv[3], "{RAIZ}": sys.argv[4], "{MODO}": sys.argv[5], "{DATA}": sys.argv[6],
+             "{DATA_BR}": sys.argv[6], "{INSTRUCAO_MODO}": sys.argv[7], "{CURTO}": sys.argv[8]}.items():
+    t = t.replace(k, v)
+print(t)
+PY
+)
+  longo_roteiro() {
+    ( cd "$EL" && timeout 10800 python3 "$RAIZ/auto/roteiro_ia.py" "roteiro_longo_$MODO" "$1" --tx "$TX" > "$EL/claude.log" 2>&1 )
+  }
+  aviso_longo() { echo "$1" > "$EL/aviso.txt"; rm -f "$EL/aviso.txt.envio-v3.json"; node "$BOT" $DRY "$EL/aviso.txt" "futviral · $MODO · LONGO · $DATA_BR
+$1" || true; echo "AVISO LONGO: $1"; }
+  rm -f "$EL/SEM_PAUTA.txt" "$EL/roteiro.json" "$EL/base.md" && rm -rf "$EL/avatar"
+  if ! longo_roteiro "$PL"; then aviso_longo "o motor de IA (auto/ia.yaml) falhou no roteiro longo"
+  elif [ -f "$EL/SEM_PAUTA.txt" ]; then aviso_longo "longo sem pauta: $(cat "$EL/SEM_PAUTA.txt")"
+  else
+    if ! python3 "$RAIZ/auto/checar.py" "$EL" "$TX" --longo > "$EL/checar.log"; then
+      longo_roteiro "$PL
+
+## CORREÇÃO
+A conferência automática reprovou os arquivos que você gravou. Corrija só o que está abaixo, reescrevendo base.md e roteiro.json. Trecho é cópia literal do transcript; número na fala vai por extenso; deixa é trecho literal da fala, sem número.
+$(cat "$EL/checar.log")" || true
+      python3 "$RAIZ/auto/checar.py" "$EL" "$TX" --longo > "$EL/checar.log"
+    fi
+    if grep -qx ok "$EL/checar.log"; then
+      if [ "${SEM_AVATAR:-}" = 1 ]; then echo "longo: roteiro ok (teste sem avatar, não renderiza)"
+      else bash "$RAIZ/auto/longo.sh" "$EL" "$MODO · LONGO · $DATA_BR" > "$EL/longo.log" 2>&1 \
+        || { [ "$?" = 75 ] && aviso_longo "longo não saiu: máquina ocupada ($(grep -h OCUPADO "$EL/longo.log" | tail -1))" || aviso_longo "longo falhou: $(grep -h ERRO "$EL/longo.log" | tail -1)"; }; fi
+    else aviso_longo "roteiro longo reprovado na conferência: $(grep PROBLEMA "$EL/checar.log" | head -3)"; fi
+  fi
+fi
+fim "$RES" ${URL:+--url "$URL"} ${MOT:+--motivo "$MOT"}
+echo "=== fim $(date '+%F %T')"

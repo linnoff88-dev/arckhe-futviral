@@ -1,0 +1,21 @@
+# CLAUDE.md — futviral
+
+Conta/autor: `inematds <inematds@gmail.com>`, repo `inematds/futviral`. Fluxo e agenda: README.md. Base de cada edição: `edicoes/<ed>/base.md`. Projetos irmãos (mesmo motor): `~/projetos/advviral` (de onde foi clonado), `~/projetos/saudeviral` e `~/projetos/finviral`.
+
+- **Radar Viral (Nei, 10/11/2026) — vale sobre as notas antigas de canal e horário abaixo:** este nicho faz parte do Radar Viral e publica no **lives24** pela fila única `~/projetos/radar-viral` (timer `radar-viral`, 1 vídeo por hora, `radar.json`). Gera às 09:00; o vídeo fica `PUBLICAR_PENDENTE` (serviço com `RADAR_VIRAL=1`) e sai a partir das 14:00. Pendente com mais de 24 h é esquecido. Segurar: `touch <edição>/SEGURAR`.
+- Criado em 26/10/2026 a pedido do Nei: radar de futebol "usando o finviral", com os 10 maiores canais de futebol do YouTube medidos por yt-dlp (`pesquisa/canais.md`). "Fecha com esses 10, pode clonar o futviral e publique no lives24."
+- Canal: **Radar Viral (lives24)** — "ficará na lives24 sempre o futebol" (Nei, 26/10/2026; antes lives12), por `auto/publicar.sh` (yt-pubx), e SEMPRE ao bot v3 com o link. A versão com foto (avatar falhou ou teste `SEM_AVATAR=1`) só vai ao bot.
+- Influenciadores em `canais.json` (só YouTube; `lang: en` para o Fabrizio Romano, o Whisper transcreve em inglês). O Nei inclui/exclui. Eu posso SUGERIR canal consolidado de futebol (nunca emergente, nunca de aposta); só entra com ok dele.
+- Regras de futebol (no roteiro e no `checar.py`): todo fato tem trecho literal no base.md; tudo atribuído; rumor é rumor até o clube confirmar; sem torcer por clube; sem aposta (o portão reprova bet/odd/palpite); sem lance, gol ou escudo (direito de transmissão); "Rumor só vale quando o clube confirma." obrigatório.
+- Agenda (Nei, 26/10/2026): GERAÇÃO às 09:00 (diário seg–sex, semanal sáb, domingo dom; `PUBLICAR_AS=12:00` no serviço) → o vídeo vai ao bot como PRÉVIA e fica `<ed>/PUBLICAR_PENDENTE.*`; PUBLICAÇÃO às 12:00 (`futviral-publicar.timer` → `auto/publicar-pendente.sh`). `touch <ed>/SEGURAR` impede a publicação.
+- Transcrição (Nei, 26/10/2026, "usando o yt quando tiver"): legenda do YouTube primeiro (`coleta/transcrever.sh` + `coleta/legenda_yt.py`, uma língua por pedido — várias seguidas dão 429), Whisper local só se não houver legenda. `<tx>/<id>/fonte` diz qual foi usada.
+- Avatar: HeyGen pelo ESTÚDIO (assinatura, `motor/avatar_heygen.sh`, trava compartilhada). Títulos `FUTVIRAL-…`. Oferta de troca de plano do HeyGen: SEMPRE recusar.
+- Referência de formato: `edicoes/referencia/` é de um projeto irmão; trocar por uma edição do futviral aprovada pelo Nei.
+
+## Self-learning
+
+When I correct you, or you catch yourself making a mistake: before continuing, add the lesson as a one-line rule under ## Lessons, so it never happens again.
+
+## Lessons
+
+- (Herdadas do advviral/finviral, mesmo motor.) Tratar por "você"; CTA só inema.club; números por extenso na fala; âncora `em` em palavra comum; citação literal do transcript; cadeia longa por `systemd-run --user`; não editar .sh com rodada em execução; voz do HeyGen mixada a -14 LUFS.
