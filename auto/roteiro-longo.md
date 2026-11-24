@@ -61,9 +61,9 @@ Um script confere cada trecho; se algum não estiver no transcript, o vídeo é 
 - Resumo em `bullets` (um item por capítulo).
 - Gancho de comentário: pergunta sobre o tema ("E você? … Comente aqui."), com `fonte` "<b>Rumor só vale quando o
   clube confirma.</b> Resumo do que os canais disseram, com a fonte de cada fato".
-- Última fala: CTA — ponte curta do tema para a IA + "Se prepare pra gestão de agentes de IA com o curso gratuito do inema
-  ponto club." O CTA é SEMPRE só o inema.club: não citar canal do YouTube, "inscreva-se" nem outro destino. Shots: `{"type":"media","src":"img/cta.jpg","calm":true,"label":"**inema.club** · gestão de agentes de IA"}`
-  e `keyword` "inema.club".
+- Última fala: CTA — ponte curta do tema para a IA + "Se prepare pra gestão de agentes de IA com o curso gratuito do ARCKHÉ
+  ponto club." O CTA é SEMPRE só o ARCKHÉ AI: não citar canal do YouTube, "inscreva-se" nem outro destino. Shots: `{"type":"media","src":"img/cta.jpg","calm":true,"label":"**ARCKHÉ AI** · gestão de agentes de IA"}`
+  e `keyword` "ARCKHÉ AI".
 
 **Shots — regras:**
 - `at` e todo `*_at` = DEIXA: trecho literal de 1 a 4 palavras da PRÓPRIA fala, só palavras comuns — nunca número,

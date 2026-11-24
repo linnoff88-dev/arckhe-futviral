@@ -120,7 +120,7 @@ NUMW = {"zero", "um", "uma", "dois", "duas", "tres", "quatro", "cinco", "seis", 
         "quatorze", "catorze", "quinze", "dezesseis", "dezessete", "dezoito", "dezenove", "vinte", "trinta", "quarenta", "cinquenta",
         "sessenta", "setenta", "oitenta", "noventa", "cem", "cento", "duzentos", "duzentas", "trezentos", "trezentas", "quatrocentos",
         "quinhentos", "seiscentos", "setecentos", "oitocentos", "novecentos", "mil", "milhao", "milhoes", "bilhao", "bilhoes", "trilhao", "trilhoes", "virgula", "porcento"}
-TELA = {r"\bésse ú ésse\b": "SUS", r"\binema ponto club\b": "inema.club", r"\binema club\b": "inema.club"}
+TELA = {r"\bésse ú ésse\b": "SUS", r"\bARCKHÉ ponto club\b": "ARCKHÉ AI", r"\bARCKHÉ club\b": "ARCKHÉ AI"}
 
 
 def chamada(hero):

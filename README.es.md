@@ -1,16 +1,16 @@
 # futviral
 
-[![futviral — radar de fútbol](guia/assets/banner-es.jpg)](https://inematds.github.io/futviral/guia/es/)
+[![futviral — radar de fútbol](guia/assets/banner-es.jpg)](https://linnoff88-dev.github.io/
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
 ## Qué es
 
-futviral hace, solo, videos cortos (9:16) con el resumen de lo que dijeron los 10 mayores canales de fútbol de YouTube: Brasileirão, fútbol europeo, mercado de fichajes, polémicas y negocios del fútbol. Mira los videos a través de la transcripción, separa los números y los hechos con la fuente de cada uno y arma un video con números grandes, sellos (RUMOR, NEGOCIANDO, FECHADO (cerrado), POLÊMICA (polémica)) y Nei comentando (avatar). El rumor se trata como rumor, ningún club tiene preferencia y las apuestas no entran. Funciona en una computadora con GPU, con la suscripción de Claude Code y de HeyGen. Es hermano de [advviral](https://github.com/inematds/advviral), de [saudeviral](https://github.com/inematds/saudeviral) y de [finviral](https://github.com/inematds/finviral) (mismo motor, otro tema).
+futviral hace, solo, videos cortos (9:16) con el resumen de lo que dijeron los 10 mayores canales de fútbol de YouTube: Brasileirão, fútbol europeo, mercado de fichajes, polémicas y negocios del fútbol. Mira los videos a través de la transcripción, separa los números y los hechos con la fuente de cada uno y arma un video con números grandes, sellos (RUMOR, NEGOCIANDO, FECHADO (cerrado), POLÊMICA (polémica)) y Nei comentando (avatar). El rumor se trata como rumor, ningún club tiene preferencia y las apuestas no entran. Funciona en una computadora con GPU, con la suscripción de Claude Code y de HeyGen. Es hermano de [advviral](https://github.com/linnoff88-dev/advviral), de [saudeviral](https://github.com/linnoff88-dev/saudeviral) y de [finviral](https://github.com/linnoff88-dev/finviral) (mismo motor, otro tema).
 
 ## 📖 Guía de uso
 
-Guía completa (landing + paso a paso): **https://inematds.github.io/futviral/guia/es/**
+Guía completa (landing + paso a paso): **https://linnoff88-dev.github.io/
 
 ## Los 10 canales
 
@@ -24,7 +24,7 @@ Eurão · Jovem Pan Esportes · Jozão · Fabrizio Romano · Chico Garcia · Tod
 |---|---|---|---|
 | 1 | Lista los videos de los canales del período (solo metadatos) | `coleta/listar.py` (llamado por `auto/rodar.sh`) | ⚙️ script |
 | 2 | Elige 1 video por canal (el más visto), sin repetir un video ya usado | `auto/rodar.sh` + `auto/usados.py` | ⚙️ script |
-| 3 | Toma los subtítulos de YouTube (segundos); si no los hay, descarga el audio y transcribe en local (inemavox, Whisper large-v3; inglés para Fabrizio) | `coleta/transcrever.sh` + `coleta/legenda_yt.py` | ⚙️ script |
+| 3 | Toma los subtítulos de YouTube (segundos); si no los hay, descarga el audio y transcribe en local (ARCKHÉvox, Whisper large-v3; inglés para Fabrizio) | `coleta/transcrever.sh` + `coleta/legenda_yt.py` | ⚙️ script |
 | 4 | Escribe `base.md` (hecho + fragmento literal), `roteiro.json` y `legenda.txt` | `claude -p` con `auto/roteiro.md` | 🤖 `claude -p` |
 | 5 | Verifica fragmentos, números escritos con letras, 5+ temas, aviso de rumor, sin apuestas; 1 corrección | `auto/checar.py` | ⚙️ script |
 | 6 | Avatar de Nei en el estudio de HeyGen (suscripción); si falla, foto + voz de Nei | `motor/avatar_heygen.sh` / `motor/narrar.py` | ⚙️ script |
@@ -50,7 +50,7 @@ Agenda (`systemd/futviral-*.timer`, activada el 26/10/2026): generación a las 0
 - Sin hinchar por nadie: todo se atribuye a quien lo dijo.
 - Sin apuestas: nada de bets, cuotas ni pronósticos. El portón lo reprueba.
 - Sin jugadas, goles, imágenes de partidos ni escudos de clubes (derechos de transmisión).
-- Habla en el tono de Nei, dirigiéndose al espectador con "você", con los números escritos con letras. Al final: una pregunta para comentar y el CTA de inema.club.
+- Habla en el tono de Nei, dirigiéndose al espectador con "você", con los números escritos con letras. Al final: una pregunta para comentar y el CTA de ARCKHÉ AI.
 - HeyGen solo por el estudio de la suscripción. La oferta de cambio de plan siempre se rechaza.
 
 ## Licencia

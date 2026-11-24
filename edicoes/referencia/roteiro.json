@@ -1,9 +1,9 @@
 {
- "marca": "INEMA · RADAR FINANCEIRO",
+ "marca": "ARCKHÉ · RADAR FINANCEIRO",
  "selo": "YOUTUBE · 03 A 08/10",
  "avatar": {
   "img": "img/avatar-teste.jpg",
-  "tag": "<b>NEI MALDANER</b> · INEMA"
+  "tag": "<b>NEI MALDANER</b> · ARCKHÉ"
  },
  "hero": "<div class=\"dt\">09/10/2026 · SEXTA</div><div class=\"t1\">IBOVESPA</div><div class=\"t2\">206.900</div><div class=\"t3\">+7,7% NUM DIA</div><div class=\"t4\">Os 5 maiores influenciadores de finanças do Brasil: o que disseram nesta semana</div><div class=\"rostos\"><div style=\"background-image:url('img/pd0Ikbmqju4.jpg')\"></div><div style=\"background-image:url('img/hty8Gb5H4gw.jpg')\"></div><div style=\"background-image:url('img/KgH6dY7IEjk.jpg')\"></div><div style=\"background-image:url('img/Zp8gL1OLinI.jpg')\"></div><div style=\"background-image:url('img/pitKu3u_-FI.jpg')\"></div></div>",
  "falas": [
@@ -339,22 +339,22 @@
   {
    "id": "f12",
    "fundo": "img/cta.jpg",
-   "fala": "Enquanto o mercado discute eleição, a inteligência artificial já está mudando o trabalho. Se prepare pra gestão de agentes de IA: curso gratuito no inema ponto club.",
+   "fala": "Enquanto o mercado discute eleição, a inteligência artificial já está mudando o trabalho. Se prepare pra gestão de agentes de IA: curso gratuito no ARCKHÉ ponto club.",
    "hero": "<div class=\"t1\" style=\"font-size:96px\">GESTÃO DE</div><div class=\"t5\">AGENTES DE IA</div><img class=\"arte\" src=\"img/cta.jpg\">",
    "caixa": {
     "tipo": "cta",
-    "a": "INEMA.CLUB",
+    "a": "ARCKHÉ AI",
     "b": "Curso gratuito: gestão de agentes de IA. Manda pra quem investe.",
     "em": "gestão"
    },
-   "fonte": "<b>inema.club</b> · cursos gratuitos de tecnologia e IA",
+   "fonte": "<b>ARCKHÉ AI</b> · cursos gratuitos de tecnologia e IA",
    "destaque": [
     "inteligência",
     "artificial",
     "gestão",
     "agentes",
     "gratuito",
-    "inema"
+    "ARCKHÉ"
    ],
    "limpa": true
   }

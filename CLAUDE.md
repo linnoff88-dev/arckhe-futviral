@@ -1,6 +1,6 @@
 # CLAUDE.md — futviral
 
-Conta/autor: `inematds <inematds@gmail.com>`, repo `inematds/futviral`. Fluxo e agenda: README.md. Base de cada edição: `edicoes/<ed>/base.md`. Projetos irmãos (mesmo motor): `~/projetos/advviral` (de onde foi clonado), `~/projetos/saudeviral` e `~/projetos/finviral`.
+Conta/autor: `linnoff88-dev <linnoff88-dev@gmail.com>`, repo `linnoff88-dev/futviral`. Fluxo e agenda: README.md. Base de cada edição: `edicoes/<ed>/base.md`. Projetos irmãos (mesmo motor): `~/projetos/advviral` (de onde foi clonado), `~/projetos/saudeviral` e `~/projetos/finviral`.
 
 - **Radar Viral (Nei, 10/11/2026) — vale sobre as notas antigas de canal e horário abaixo:** este nicho faz parte do Radar Viral e publica no **lives24** pela fila única `~/projetos/radar-viral` (timer `radar-viral`, 1 vídeo por hora, `radar.json`). Gera às 09:00; o vídeo fica `PUBLICAR_PENDENTE` (serviço com `RADAR_VIRAL=1`) e sai a partir das 14:00. Pendente com mais de 24 h é esquecido. Segurar: `touch <edição>/SEGURAR`.
 - Criado em 26/10/2026 a pedido do Nei: radar de futebol "usando o finviral", com os 10 maiores canais de futebol do YouTube medidos por yt-dlp (`pesquisa/canais.md`). "Fecha com esses 10, pode clonar o futviral e publique no lives24."
@@ -18,4 +18,4 @@ When I correct you, or you catch yourself making a mistake: before continuing, a
 
 ## Lessons
 
-- (Herdadas do advviral/finviral, mesmo motor.) Tratar por "você"; CTA só inema.club; números por extenso na fala; âncora `em` em palavra comum; citação literal do transcript; cadeia longa por `systemd-run --user`; não editar .sh com rodada em execução; voz do HeyGen mixada a -14 LUFS.
+- (Herdadas do advviral/finviral, mesmo motor.) Tratar por "você"; CTA só ARCKHÉ AI; números por extenso na fala; âncora `em` em palavra comum; citação literal do transcript; cadeia longa por `systemd-run --user`; não editar .sh com rodada em execução; voz do HeyGen mixada a -14 LUFS.

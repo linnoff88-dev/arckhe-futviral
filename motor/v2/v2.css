@@ -1,4 +1,4 @@
-/* Explicavideos v2 — design system (dark cinema, âmbar INEMA). Coordenadas em px de um quadro 1920×1080. */
+/* Explicavideos v2 — design system (dark cARCKHÉ, âmbar ARCKHÉ). Coordenadas em px de um quadro 1920×1080. */
 @font-face{font-family:"MontBlack";src:url("mont-black.ttf")}
 @font-face{font-family:"MontX";src:url("mont-xbold.ttf")}
 @font-face{font-family:"Mono";src:url("mono.ttf")}
@@ -183,7 +183,7 @@ html,body{margin:0;background:var(--bg);overflow:hidden}
 .v916 .pip{left:0;top:1110px;width:1080px;height:600px;border-radius:0;box-shadow:0 -2px 0 rgba(255,182,56,.55),0 -30px 60px rgba(0,0,0,.5)}
 .v916 .pip video{width:1080px;height:600px;object-fit:cover;object-position:50% 20%}
 .v916 .pip-tag{left:40px;top:1735px;width:1000px;font-size:22px;text-align:left}
-.v916 .pip-tag:after{content:"inema.club";position:absolute;right:0;top:0;color:var(--amber);letter-spacing:.12em}
+.v916 .pip-tag:after{content:"ARCKHÉ AI";position:absolute;right:0;top:0;color:var(--amber);letter-spacing:.12em}
 .v916 #caps{left:40px;top:960px;width:1000px;height:130px}
 .v916 .cap{width:1000px;font-size:46px;line-height:1.2}
 .v916 .cap span{color:rgba(238,243,255,.5);margin:0 .16em}

@@ -2,7 +2,7 @@
 
 Ranking: Anbima FInfluence, 10ª edição (2º semestre de 2025): Bruno Perini (1º), Economista Sincero (2º), Ricardo Amorim (3º); O Primo Rico e Hermann Greb / Os Economistas no top 10 (ordem do 4º em diante não confirmada).
 
-Transcrições locais (inemavox, Whisper large-v3): `~/projetos/output/finviral/coleta/tx/<id>/transcript.txt`. Lista da semana: `coleta/semana.tsv`.
+Transcrições locais (ARCKHÉvox, Whisper large-v3): `~/projetos/output/finviral/coleta/tx/<id>/transcript.txt`. Lista da semana: `coleta/semana.tsv`.
 
 | Número usado | Quem disse | Vídeo | Data | Trecho da transcrição |
 |---|---|---|---|---|

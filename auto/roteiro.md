@@ -1,6 +1,6 @@
 # Tarefa: roteiro do futviral ({MODO}, {DATA})
 
-Você monta o roteiro de um vídeo 9:16 do **futviral**: o que os maiores canais de futebol do YouTube (Brasileirão, futebol europeu, mercado da bola, polêmicas, negócios do futebol) disseram, com números grandes, fonte na tela, o Nei comentando e CTA do inema.club no fim. Trabalhe só com os arquivos abaixo. Não use a internet nem outra API.
+Você monta o roteiro de um vídeo 9:16 do **futviral**: o que os maiores canais de futebol do YouTube (Brasileirão, futebol europeu, mercado da bola, polêmicas, negócios do futebol) disseram, com números grandes, fonte na tela, o Nei comentando e CTA do ARCKHÉ AI no fim. Trabalhe só com os arquivos abaixo. Não use a internet nem outra API.
 
 ## Entrada
 - Pasta da edição: `{ED}`. Escreva nela apenas os arquivos pedidos.
@@ -27,9 +27,9 @@ Uma tabela com as colunas `| Número usado | Quem disse | Vídeo | Data | Trecho
 
 ### 2. `{ED}/roteiro.json`
 Mesmo formato da edição de referência:
-- `marca`: "INEMA · RADAR FUTEBOL".
+- `marca`: "ARCKHÉ · RADAR FUTEBOL".
 - `selo`: período, por exemplo "YOUTUBE · 09/10" ou "YOUTUBE · 03 A 08/10".
-- `avatar`: `{"img": "img/avatar-teste.jpg", "tag": "<b>NEI MALDANER</b> · INEMA"}`.
+- `avatar`: `{"img": "img/avatar-teste.jpg", "tag": "<b>NEI MALDANER</b> · ARCKHÉ"}`.
 - `hero` é o quadro 0. Leva:
   - a data `{DATA_BR}` com o dia da semana;
   - o tema;
@@ -57,14 +57,14 @@ Regras das `falas`:
 - **Texto falado (`fala`), no tom do Nei:**
   - Tratar por "você" (nunca "tu", "teu", "te prepara"; o Nei pediu em 10/10/2026), frases curtas.
   - Escrever TODOS os números e anos por extenso, sem algarismo: "sete vírgula sete por cento", "dois mil e vinte e oito".
-  - Siglas lidas como se fala ("cê bê éfe" para CBF, "vê á érre" para VAR, "ésse á éfe" para SAF). O CTA "inema ponto club" não muda. Sem emoji.
+  - Siglas lidas como se fala ("cê bê éfe" para CBF, "vê á érre" para VAR, "ésse á éfe" para SAF). O CTA "ARCKHÉ ponto club" não muda. Sem emoji.
 - **`em` (âncora):** uma palavra comum que está na fala, nunca um número.
 - **Penúltima fala:** gancho de comentário. É uma pergunta que chama a pessoa a contar onde ela está e como é aí (Nei, 13/10/2026): "De onde você está assistindo? Pra qual time você torce e o que acha disso? Comente aqui" (adapte ao tema: pra qual time você torce, quem tem razão nessa polêmica, como está o seu time), com `"limpa": true`. A `fonte` dela é "<b>Rumor só vale quando o clube confirma.</b> Resumo do que os canais disseram, com a fonte de cada fato".
 - **Última fala:** CTA com `fundo` "img/cta.jpg" e `"limpa": true`.
-  - Fala: uma ponte curta do tema para a IA, mais "Você pode aprender isso no inema ponto club, com cursos gratuitos." (Nei, 13/10/2026: o CTA diz que dá pra APRENDER no inema.club)
-  - O CTA é SEMPRE só o inema.club: não citar canal do YouTube, Inema Club24, Inema Pro, "vídeo longo", "se inscreva" nem outro destino.
+  - Fala: uma ponte curta do tema para a IA, mais "Você pode aprender isso no ARCKHÉ ponto club, com cursos gratuitos." (Nei, 13/10/2026: o CTA diz que dá pra APRENDER no ARCKHÉ AI)
+  - O CTA é SEMPRE só o ARCKHÉ AI: não citar canal do YouTube, ARCKHÉ Club24, ARCKHÉ Pro, "vídeo longo", "se inscreva" nem outro destino.
   - `hero` igual ao da referência (GESTÃO DE / AGENTES DE IA / img/cta.jpg).
-  - `caixa` tipo cta com "INEMA.CLUB".
+  - `caixa` tipo cta com "ARCKHÉ AI".
 - **Futebol (regras duras):**
   - Relatar e atribuir sempre ("segundo ele", "o Nicola apurou"). Nunca vira opinião do Nei.
   - **Rumor é rumor.** Contratação, saída, demissão de técnico: só "fechado" se ELE disse que o clube confirmou; senão é "segundo Fulano, está em negociação" ou "é rumor". Carimbo "RUMOR", "NEGOCIANDO" ou "FECHADO" conforme o que foi dito.

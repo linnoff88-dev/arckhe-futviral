@@ -1,16 +1,16 @@
 # futviral
 
-[![futviral — football radar](guia/assets/banner-en.jpg)](https://inematds.github.io/futviral/guia/en/)
+[![futviral — football radar](guia/assets/banner-en.jpg)](https://linnoff88-dev.github.io/
 
 **🇧🇷 [Português](README.md) · 🇺🇸 [English](README.en.md) · 🇪🇸 [Español](README.es.md)**
 
 ## What it is
 
-futviral makes, on its own, short videos (9:16) summing up what the 10 biggest football channels on YouTube said: Brasileirão, European football, the transfer market, controversies and the business of football. It watches the videos through their transcripts, pulls out the numbers and facts with the source of each one, and builds a video with big numbers, stamps (RUMOR, NEGOCIANDO, FECHADO, POLÊMICA — rumor, negotiating, done deal, controversy) and Nei commenting (avatar). A rumor is treated as a rumor, no club gets a side and betting is left out. It runs on a computer with a GPU, using the Claude Code and HeyGen subscriptions. It is a sibling of [advviral](https://github.com/inematds/advviral), [saudeviral](https://github.com/inematds/saudeviral) and [finviral](https://github.com/inematds/finviral) (same engine, different topic).
+futviral makes, on its own, short videos (9:16) summing up what the 10 biggest football channels on YouTube said: Brasileirão, European football, the transfer market, controversies and the business of football. It watches the videos through their transcripts, pulls out the numbers and facts with the source of each one, and builds a video with big numbers, stamps (RUMOR, NEGOCIANDO, FECHADO, POLÊMICA — rumor, negotiating, done deal, controversy) and Nei commenting (avatar). A rumor is treated as a rumor, no club gets a side and betting is left out. It runs on a computer with a GPU, using the Claude Code and HeyGen subscriptions. It is a sibling of [advviral](https://github.com/linnoff88-dev/advviral), [saudeviral](https://github.com/linnoff88-dev/saudeviral) and [finviral](https://github.com/linnoff88-dev/finviral) (same engine, different topic).
 
 ## 📖 User guide
 
-Full guide (landing + step by step): **https://inematds.github.io/futviral/guia/en/**
+Full guide (landing + step by step): **https://linnoff88-dev.github.io/
 
 ## The 10 channels
 
@@ -24,7 +24,7 @@ Eurão · Jovem Pan Esportes · Jozão · Fabrizio Romano · Chico Garcia · Tod
 |---|---|---|---|
 | 1 | Lists the channels' videos for the period (metadata only) | `coleta/listar.py` (called by `auto/rodar.sh`) | ⚙️ script |
 | 2 | Picks 1 video per channel (the most viewed), never repeating a video already used | `auto/rodar.sh` + `auto/usados.py` | ⚙️ script |
-| 3 | Takes the YouTube caption (seconds); if there isn't one, downloads the audio and transcribes locally (inemavox, Whisper large-v3; English for Fabrizio) | `coleta/transcrever.sh` + `coleta/legenda_yt.py` | ⚙️ script |
+| 3 | Takes the YouTube caption (seconds); if there isn't one, downloads the audio and transcribes locally (ARCKHÉvox, Whisper large-v3; English for Fabrizio) | `coleta/transcrever.sh` + `coleta/legenda_yt.py` | ⚙️ script |
 | 4 | Writes `base.md` (fact + literal excerpt), `roteiro.json` and `legenda.txt` | `claude -p` with `auto/roteiro.md` | 🤖 `claude -p` |
 | 5 | Checks excerpts, numbers spelled out, 5+ topics, rumor notice, no betting; 1 correction | `auto/checar.py` | ⚙️ script |
 | 6 | Nei's avatar in the HeyGen studio (subscription); if it fails, Nei's photo + voice | `motor/avatar_heygen.sh` / `motor/narrar.py` | ⚙️ script |
@@ -50,7 +50,7 @@ Schedule (`systemd/futviral-*.timer`, switched on 10/26/2026): generation at 09:
 - No rooting: everything is attributed to whoever said it.
 - No betting: no bets, odds or tips. The gate rejects it.
 - No plays, goals, match footage or club crests (broadcast rights).
-- Spoken in Nei's tone, addressing the viewer as "você", with numbers spelled out in words. At the end: a question to comment on and the inema.club CTA.
+- Spoken in Nei's tone, addressing the viewer as "você", with numbers spelled out in words. At the end: a question to comment on and the ARCKHÉ AI CTA.
 - HeyGen only through the subscription studio. The plan-change offer is always declined.
 
 ## License
