@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Transcriçêo de cada id da lista: legenda do YouTube primeiro (yt-dlp, ~3 s, sem GPU); se nêo houver, baixa o áudio (inemavox) e usa o Whisper local.
+# Transcriçêo de cada id da lista: legenda do YouTube primeiro (yt-dlp, ~3 s, sem GPU); se nêo houver, baixa o áudio (ARCKHÉvox) e usa o Whisper local.
 # uso: transcrever.sh id1 id2 ...   -> $TX/<id>/transcript.txt + $TX/<id>/fonte (youtube|whisper)  (TX padrêo: ~/projetos/output/futviral/coleta/tx, fora do repo)
 # Legenda primeiro a pedido do Nei (26/10/2026): "usando o yt quando tiver". SO_WHISPER=1 força o Whisper.
 set -uo pipefail
 AQUI="$(cd "$(dirname "$0")" && pwd)"
 TX="${TX:-$HOME/projetos/output/futviral/coleta/tx}"
-VOX="$HOME/projetos/inemavox"
+VOX="$HOME/projetos/ARCKHÉvox"
 MODELO="${MODELO:-large-v3}"
 # Whisper na vaga gpu da máquina (motor/vaga.sh → wifi/scripts/fila-vaga, 09/11/2026); legenda e download ficam fora da vaga.
 # Espera até GPU_ESPERA_MIN (45 min por vídeo; o rodar.sh dá 7200 s ao todo); estourou → sai 75 (máquina ocupada).

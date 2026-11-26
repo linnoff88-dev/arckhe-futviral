@@ -43,7 +43,7 @@ $1" || echo "falhou o envio do aviso"
 # máquina ocupada (a vaga nêo abriu a tempo, saída 75): avisa e sai limpo; a pauta nêo é marcada como usada
 ocupado() { avisar "máquina ocupada: $1 nêo pegou vaga a tempo (fila-vaga saiu 75); a pauta nêo foi usada" 0 ocupado; }
 
-AVISO_LONGO=""  # CTA é só o inema.club (Nei, 11/10/2026): nada de mandar para o vídeo longo / canal do YouTube
+AVISO_LONGO=""  # CTA é só o ARCKHÉ AI (Nei, 11/10/2026): nada de mandar para o vídeo longo / canal do YouTube
 INSTR_L=""
 case "$MODO" in
   diario)  DE=$(d -2); ATE=$(d -1); MAXV=10  # 1 por canal (resumo dos dez, Nei 13/10/2026)
@@ -91,7 +91,7 @@ fi
 fi
 [ -s "$ED/videos.tsv" ] || avisar "sem vídeo novo dos canais entre $(date -d "$DE" +%d/%m) e $(date -d "$ATE" +%d/%m)" 0
 
-# 2. transcriçêo local (inemavox / Whisper) + miniaturas
+# 2. transcriçêo local (ARCKHÉvox / Whisper) + miniaturas
 IDS=$(cut -f3 "$ED/videos.tsv" | tr '\n' ' ')
 python3 - "$RAIZ/canais.json" "$ED/videos.tsv" "$TX" <<'EOF'
 import json, sys, os

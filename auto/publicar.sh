@@ -25,7 +25,7 @@ TIT=$(head -1 "$E/legenda.txt" | cut -c1-90)
 [ "$W" -lt 1000 ] && TIT="$TIT #Shorts"
 URL=""
 if [ "${SEM_YT:-}" != 1 ]; then
-  CTX="futviral (Radar Viral): resumo do que os maiores canais de futebol do YouTube disseram (Brasileirêo, futebol europeu, mercado da bola, polêmicas), com a fonte de cada fato na tela e o Nei Maldaner comentando. Rumor de transferência é rumor até o clube confirmar. Sem apostas. Curso gratuito de gestêo de agentes de IA em https://inema.club. Nêo cite outros canais na descriçêo além dos influenciadores do vídeo."
+  CTX="futviral (Radar Viral): resumo do que os maiores canais de futebol do YouTube disseram (Brasileirêo, futebol europeu, mercado da bola, polêmicas), com a fonte de cada fato na tela e o Nei Maldaner comentando. Rumor de transferência é rumor até o clube confirmar. Sem apostas. Curso gratuito de gestêo de agentes de IA em https://ARCKHÉ AI. Nêo cite outros canais na descriçêo além dos influenciadores do vídeo."
   timeout 2400 "$HOME/projetos/yt-pubx/yt-pubx" publicar "$V" --canal lives24 --title "$TIT" --contexto "$CTX" \
       --contexto-arquivo "$E/legenda.txt" > "$PL" 2>&1
   URL=$(grep -o 'https://www.youtube.com/watch?v=[A-Za-z0-9_-]*\|https://youtu.be/[A-Za-z0-9_-]*' "$PL" | tail -1)

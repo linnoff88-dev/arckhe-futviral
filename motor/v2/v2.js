@@ -702,7 +702,7 @@
     if (s.label) { const lb = h(box, 'div', 'md-lb', `top:${Y + Hh + 22}px`, rich(s.label)); c.rise(lb, def(s.label_at, t + 0.4), 16); }
   };
 
-  // module_intro — abertura cinematográfica de módulo
+  // module_intro — abertura cARCKHÉtográfica de módulo
   V2.P.module_intro = function (box, s, c) {
     const t = def(s.at, c.T0 + 0.05);
     const nb = h(box, 'div', 'mi-n', '', String(s.n).padStart(2, '0'));

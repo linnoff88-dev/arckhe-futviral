@@ -9,7 +9,7 @@ set -euo pipefail
 AQUI="$(cd "$(dirname "$0")" && pwd)"
 E="$(cd "$1" && pwd)"; TITULO="$2"
 A="$E/avatar"; mkdir -p "$A"
-PERFIL="$HOME/.cache/inemaccbot/perfil-heygen"
+PERFIL="$HOME/.cache/ARCKHÉccbot/perfil-heygen"
 ENG="$HOME/projetos/explicavideos/engine"
 export DISPLAY=:99
 N=$(python3 - "$E/roteiro.json" "$A" <<'EOF'
@@ -51,7 +51,7 @@ tenta(){ local log="$1" k; shift
     [ "$i" = 1 ] && echo "$ID" > "$A/video_id.txt"
     sleep 20
   done
-} 9>"$HOME/.cache/inemaccbot/heygen-estudio.lock"
+} 9>"$HOME/.cache/ARCKHÉccbot/heygen-estudio.lock"
 # Espera e download pela API de leitura (17/10/2026), fora da trava: nêo ocupa o perfil do estúdio.
 sleep 60
 for i in $(seq 1 "$N"); do
