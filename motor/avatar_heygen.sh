@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Avatar do Nei pelo ESTÚDIO do HeyGen (assinatura, sem API de geração): envia a fala, espera, baixa e retemporiza.
+# Avatar do Nei pelo ESTÚDIO do HeyGen (assinatura, sem API de geraçêo): envia a fala, espera, baixa e retemporiza.
 # uso: motor/avatar_heygen.sh <pasta-da-edicao> <titulo>   -> <ed>/avatar/avatar.mp4 + avatar/tempos.json
 # O estúdio aceita até 4500 caracteres por vídeo: a fala é dividida em blocos de até 4000 (sempre entre falas),
-# todos são enviados antes (o HeyGen gera em paralelo), depois baixados e emendados num avatar.mp4 só.
+# todos sêo enviados antes (o HeyGen gera em paralelo), depois baixados e emendados num avatar.mp4 só.
 # Trava (flock) no perfil do estúdio: outras sessões (explicavideos, eventosextremos) usam o mesmo perfil.
 # O script do estúdio recusa oferta de troca de plano (o Nei NUNCA troca de plano).
 set -euo pipefail
@@ -28,7 +28,7 @@ print(len(blocos))
 EOF
 )
 # O heygen-studio.mjs entra na fila do perfil sozinho (explicavideos/engine/heygen-perfil.mjs, até 3 h): por isso o timeout do envio é 12000 s.
-# Quem não pega a trava (ex.: lote de tradução do explicavideos) abre o mesmo perfil e o Chrome recusa
+# Quem nêo pega a trava (ex.: lote de traduçêo do explicavideos) abre o mesmo perfil e o Chrome recusa
 # ("ProcessSingleton", 10/10/2026): espera 2 min e tenta de novo, até 1 h. Nada foi enviado quando isso acontece.
 tenta(){ local log="$1" k; shift
   for k in $(seq 1 30); do
@@ -40,19 +40,19 @@ tenta(){ local log="$1" k; shift
   flock -w 1800 9 || { echo "ERRO: perfil do HeyGen ocupado há 30 min"; exit 5; }
   cd "$HOME/projetos/explicavideos"
   for i in $(seq 1 "$N"); do
-    # retomada: bloco já enviado (id gravado) não é reenviado — só baixa (REFAZER_HEYGEN=1 força novo envio)
+    # retomada: bloco já enviado (id gravado) nêo é reenviado — só baixa (REFAZER_HEYGEN=1 força novo envio)
     if [ -s "$A/video_id-b$i.txt" ] && [ "${REFAZER_HEYGEN:-}" != 1 ]; then echo "bloco $i já enviado: $(cat "$A/video_id-b$i.txt")"; continue; fi
     T="$TITULO"; [ "$N" -gt 1 ] && T="$TITULO-b$i"
     tenta "$A/studio-b$i.log" timeout 12000 node "$ENG/heygen-studio.mjs" --titulo "$T" --fala-arquivo "$A/fala-b$i.txt" --perfil "$PERFIL" --template TEMPLATE-AVATAR16 \
       || { echo "ERRO no estúdio (bloco $i/$N): $(grep -h ERRO "$A/studio-b$i.log" | tail -1)"; exit 3; }
     ID=$(grep -o 'create-v4/[0-9a-f]\{32\}' "$A/studio-b$i.log" | tail -1 | cut -d/ -f2)
-    [ -n "$ID" ] || { echo "ERRO: id do vídeo do bloco $i não achado no studio-b$i.log"; exit 3; }
+    [ -n "$ID" ] || { echo "ERRO: id do vídeo do bloco $i nêo achado no studio-b$i.log"; exit 3; }
     echo "$ID" > "$A/video_id-b$i.txt"
     [ "$i" = 1 ] && echo "$ID" > "$A/video_id.txt"
     sleep 20
   done
 } 9>"$HOME/.cache/inemaccbot/heygen-estudio.lock"
-# Espera e download pela API de leitura (17/10/2026), fora da trava: não ocupa o perfil do estúdio.
+# Espera e download pela API de leitura (17/10/2026), fora da trava: nêo ocupa o perfil do estúdio.
 sleep 60
 for i in $(seq 1 "$N"); do
   [ -s "$A/avatar-b$i.mp4" ] && continue
@@ -68,5 +68,5 @@ else
   RENDER_ESPERA_MIN="${RENDER_ESPERA_MIN:-60}" bash "$AQUI/vaga.sh" render "$(basename "$(dirname "$AQUI")")-emenda" \
     ffmpeg -v error -y "${ARGS[@]}" -filter_complex "${FIL}concat=n=$N:v=1:a=1[v][a]" -map "[v]" -map "[a]" -c:v libx264 -crf 18 -preset fast -c:a aac -b:a 192k "$A/avatar.mp4"
 fi
-# só os passos pesados vão para a vaga da máquina (09/11/2026): a espera e o download do HeyGen ficam fora; saída 75 = máquina ocupada
+# só os passos pesados vêo para a vaga da máquina (09/11/2026): a espera e o download do HeyGen ficam fora; saída 75 = máquina ocupada
 GPU_ESPERA_MIN="${GPU_ESPERA_MIN:-60}" bash "$AQUI/vaga.sh" gpu "$(basename "$(dirname "$AQUI")")-retempo" python3 "$AQUI/retempo.py" "$E"

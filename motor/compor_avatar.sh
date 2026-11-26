@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# A voz do HeyGen chega ~-26 dB: loudnorm a -14 LUFS (padrão de short) antes de mixar.
+# A voz do HeyGen chega ~-26 dB: loudnorm a -14 LUFS (padrêo de short) antes de mixar.
 # Palco (cena.js gerado com --avatar) + avatar do HeyGen no canto (rosto 400x453 em 640,1290, moldura âmbar do palco) + trilha.
 # uso: motor/compor_avatar.sh <pasta-da-edicao> [saida.mp4]   (precisa de <ed>/avatar/avatar.mp4)
 set -euo pipefail
@@ -8,9 +8,9 @@ E="$(cd "$1" && pwd)"; SAIDA="${2:-$E/video-avatar.mp4}"
 MUSICA="${MUSICA:-$HOME/projetos/cardshorts/musicas/tensa.mp3}"
 A="$E/avatar/avatar.mp4"
 mkdir -p "$E/build"
-# palco já renderizado e mais novo que a cena? não refaz
+# palco já renderizado e mais novo que a cena? nêo refaz
 [ "$E/build/palco-avatar.mp4" -nt "$E/cena.js" ] || node "$AQUI/render.mjs" "$E" "$E/build/palco-avatar.mp4"
-# respiros (1 s do cartão de virada): avatar com o mesmo buraco da cena; durante o cartão o avatar some (Nei, 14/10/2026)
+# respiros (1 s do cartêo de virada): avatar com o mesmo buraco da cena; durante o cartêo o avatar some (Nei, 14/10/2026)
 python3 "$AQUI/respiros.py" "$E" "$A" "$E/build/avatar-resp.mp4"; A="$E/build/avatar-resp.mp4"
 GAP=$(python3 -c "import json,sys; s=open(sys.argv[1]).read(); C=json.loads(s[s.index('{'):s.rindex('}')+1]); print('+'.join(f\"between(t,{v['ini']:.3f},{v['fim']:.3f})\" for v in C.get('viradas',[])) or '0')" "$E/cena.js")
 D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$A")

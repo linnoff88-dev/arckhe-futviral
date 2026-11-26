@@ -5,7 +5,7 @@
 #   SEM_YT=1 só manda ao bot; SEM_BOT=1 simula o envio ao bot (teste).
 # Autorizado pelo Nei em 10/10/2026: "pode sempre criar direto com o avatar … publicar … e sempre manda para o bot também".
 set -uo pipefail
-# systemd não tem ~/.npm-global/bin no PATH e pegava o codex velho de /usr/bin (0.116), que não lê o config.toml do novo (10/10/2026)
+# systemd nêo tem ~/.npm-global/bin no PATH e pegava o codex velho de /usr/bin (0.116), que nêo lê o config.toml do novo (10/10/2026)
 export PATH="$HOME/.npm-global/bin:$PATH"
 V="$1"; E="$(cd "$2" && pwd)"; ROT="$3"; EXTRA="${4:-}"
 PL="$E/publicar-$(printf %s "$ROT" | tr -c 'A-Za-z0-9-' _).log"  # o rótulo traz a data dd/mm/aaaa: barra no nome quebrava o log (10/10/2026)
@@ -25,14 +25,14 @@ TIT=$(head -1 "$E/legenda.txt" | cut -c1-90)
 [ "$W" -lt 1000 ] && TIT="$TIT #Shorts"
 URL=""
 if [ "${SEM_YT:-}" != 1 ]; then
-  CTX="futviral (Radar Viral): resumo do que os maiores canais de futebol do YouTube disseram (Brasileirão, futebol europeu, mercado da bola, polêmicas), com a fonte de cada fato na tela e o Nei Maldaner comentando. Rumor de transferência é rumor até o clube confirmar. Sem apostas. Curso gratuito de gestão de agentes de IA em https://inema.club. Não cite outros canais na descrição além dos influenciadores do vídeo."
+  CTX="futviral (Radar Viral): resumo do que os maiores canais de futebol do YouTube disseram (Brasileirêo, futebol europeu, mercado da bola, polêmicas), com a fonte de cada fato na tela e o Nei Maldaner comentando. Rumor de transferência é rumor até o clube confirmar. Sem apostas. Curso gratuito de gestêo de agentes de IA em https://inema.club. Nêo cite outros canais na descriçêo além dos influenciadores do vídeo."
   timeout 2400 "$HOME/projetos/yt-pubx/yt-pubx" publicar "$V" --canal lives24 --title "$TIT" --contexto "$CTX" \
       --contexto-arquivo "$E/legenda.txt" > "$PL" 2>&1
   URL=$(grep -o 'https://www.youtube.com/watch?v=[A-Za-z0-9_-]*\|https://youtu.be/[A-Za-z0-9_-]*' "$PL" | tail -1)
 fi
 if [ -n "$URL" ]; then ST="publicado no Radar Viral (lives24): $URL"
 elif [ "${SEM_YT:-}" = 1 ]; then ST="(sem YouTube nesta rodada)"
-else ST="⚠ NÃO publicou no lives24: $(grep -h -i 'erro\|error\|quota\|limit' "$PL" | tail -1 | cut -c1-200)"; fi
+else ST="⚠ NêO publicou no lives24: $(grep -h -i 'erro\|error\|quota\|limit' "$PL" | tail -1 | cut -c1-200)"; fi
 if [ -z "$URL" ]; then  # (Nei, 06/11/2026: aviso do YouTube no v3 só se der erro)
   VB="$V"  # bot aceita até ~49 MB: acima disso vai uma cópia 720p (o YouTube recebe o original)
   if [ "$(stat -c %s "$V")" -gt 48000000 ]; then
@@ -47,4 +47,4 @@ $ST
 $(head -c 600 "$E/legenda.txt")$EXTRA" || echo "falhou o envio ao bot"
 fi
 echo "$ST"
-# futviral ainda não vai ao TikTok/Instagram (metricool-pub2 não configurado para ele).
+# futviral ainda nêo vai ao TikTok/Instagram (metricool-pub2 nêo configurado para ele).

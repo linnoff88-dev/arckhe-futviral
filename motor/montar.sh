@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Renderiza o palco da edição e mistura narração + trilha (mesma mixagem do eventosextremospub).
+# Renderiza o palco da ediçêo e mistura narraçêo + trilha (mesma mixagem do eventosextremospub).
 # uso: motor/montar.sh <pasta-da-edicao> [saida.mp4]
 set -euo pipefail
 AQUI="$(cd "$(dirname "$0")" && pwd)"
@@ -7,7 +7,7 @@ E="$(cd "$1" && pwd)"; SAIDA="${2:-$E/video.mp4}"
 MUSICA="${MUSICA:-$HOME/projetos/cardshorts/musicas/tensa.mp3}"
 mkdir -p "$E/build"
 node "$AQUI/render.mjs" "$E" "$E/build/palco.mp4"
-# respiros (1 s do cartão de virada): o mesmo buraco que o gerar_cena.py abriu na cena (Nei, 14/10/2026)
+# respiros (1 s do cartêo de virada): o mesmo buraco que o gerar_cena.py abriu na cena (Nei, 14/10/2026)
 python3 "$AQUI/respiros.py" "$E" "$E/narracao.wav" "$E/build/narracao-resp.wav"
 D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$E/build/narracao-resp.wav")
 FADE=$(python3 -c "print(max(0, $D - 1.4))")

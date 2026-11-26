@@ -1,5 +1,5 @@
 /* Explicavideos v2 — biblioteca de cenas explicativas animadas (GSAP, seek-safe).
-   Cada cena = cabeçalho + cartão lateral + sequência de "shots". Cada shot é um primitivo de V2.P
+   Cada cena = cabeçalho + cartêo lateral + sequência de "shots". Cada shot é um primitivo de V2.P
    que recebe tempos já resolvidos (segundos relativos à cena) a partir das palavras faladas. */
 (function () {
   const V2 = (window.V2 = { P: {} });
@@ -23,7 +23,7 @@
   const lines = (text, px, width) => Math.max(1, Math.ceil(plain(text).length * px * 0.56 / width));
   const def = (v, d) => (v == null || Number.isNaN(v) ? d : v);
   V2.util = { h, esc, rich, fs, rng };
-  // rótulos fixos por idioma (S.lang vem do build; padrão pt)
+  // rótulos fixos por idioma (S.lang vem do build; padrêo pt)
   const LBL = {
     pt: { take: 'PARA LEVAR', scene: 'CENA', inp: 'ENTRADA', out: 'SAÍDA', mod: 'MÓDULO', goal: 'OBJETIVO', ex: 'EXERCÍCIO' },
     en: { take: 'TAKEAWAY', scene: 'SCENE', inp: 'INPUT', out: 'OUTPUT', mod: 'MODULE', goal: 'GOAL', ex: 'EXERCISE' },
@@ -77,7 +77,7 @@
     if (openHook) tl.set(stage, { opacity: 1 }, 0);
     else tl.fromTo(stage, { opacity: 0 }, { opacity: 1, duration: 0.3 }, 0);
     // Palco nunca vazio: o shot anterior só sai quando o PRÓXIMO já mostra conteúdo (1º tween de um
-    // elemento dele), não no `at` do próximo — os itens de um shot costumam entrar só nas próprias deixas.
+    // elemento dele), nêo no `at` do próximo — os itens de um shot costumam entrar só nas próprias deixas.
     const built = shots.map((shot, i) => {
       let j = i + 1;
       while (j < shots.length && shots[j].keep) j++;
@@ -96,7 +96,7 @@
       else tl.fromTo(box, { opacity: 0 }, { opacity: 1, duration: shot.calm ? 0.6 : 0.25, ease: shot.calm ? 'sine.inOut' : 'none' }, Math.max(0, first - (shot.calm ? 0.3 : 0.1)));
       return { t0, t1, j, box, first };
     });
-    // no reel o cabeçalho (capítulo/título) não ocupa o topo — a tela é do gancho e da prova
+    // no reel o cabeçalho (capítulo/título) nêo ocupa o topo — a tela é do gancho e da prova
     if (!S.reel || S.header) header(ctx, built.length ? built[0].first : S.dur);
     side(ctx);
     built.forEach((b) => {
@@ -339,7 +339,7 @@
     }
   };
 
-  // radar — critérios como eixos; requisito vira polígono; candidatos encaixam ou não
+  // radar — critérios como eixos; requisito vira polígono; candidatos encaixam ou nêo
   V2.P.radar = function (box, s, c) {
     const axes = s.axes || [], k = axes.length, C = [745, 600], RAD = 210, T = times(axes, c, 0.9);
     const dir = axes.map((_, i) => { const a = -Math.PI / 2 + i * 2 * Math.PI / k; return [Math.cos(a), Math.sin(a)]; });
@@ -377,7 +377,7 @@
     });
   };
 
-  // lanes — nomes/ideias separados por função em trilhas
+  // lanes — nomes/ideias separados por funçêo em trilhas
   V2.P.lanes = function (box, s, c) {
     const L = s.lanes || [], m = L.length, gap = 24, w = (1330 - (m - 1) * gap) / m;
     const lx = L.map((_, i) => 90 + i * (w + gap));
@@ -671,7 +671,7 @@
   V2.P.media = function (box, s, c) {
     const t = def(s.at, c.T0 + 0.05), Y = s.label ? 150 : 170;
     let X = 90, W = 1330, Hh = s.label ? 700 : 780;
-    // calm (2.7): moldura no formato da imagem — a ilustração aparece INTEIRA no zoom 1 (nada cortado embaixo)
+    // calm (2.7): moldura no formato da imagem — a ilustraçêo aparece INTEIRA no zoom 1 (nada cortado embaixo)
     if (s.calm && s.iw && s.ih) { const ar = s.iw / s.ih, w2 = Math.min(W, Hh * ar); X += (W - w2) / 2; Hh = w2 / ar; W = w2; }
     const fr = h(box, 'div', 'md-frame', `left:${X}px;top:${Y}px;width:${W}px;height:${Hh}px`);
     // imagem e destaques no MESMO contêiner: o zoom move os dois juntos (o destaque fica na palavra certa)
@@ -680,14 +680,14 @@
     let [fx, fy] = s.focus || [0.5, 0.5], [z0, z1] = s.zoom || (c.S.reel ? [1.35, 1.6] : [1.0, 1.12]);
     // zoom que CENTRALIZA o foco (fx, fy) na moldura, sem mostrar borda vazia (limites por eixo)
     const IH = W * (s.ih && s.iw ? s.ih / s.iw : Hh / W);
-    // escala mínima para a imagem cobrir a moldura inteira (imagem panorâmica não deixa faixa vazia)
+    // escala mínima para a imagem cobrir a moldura inteira (imagem panorâmica nêo deixa faixa vazia)
     const zmin = Math.max(1, Hh / IH);
     z0 = Math.max(z0, zmin); z1 = Math.max(z1, zmin);
     const pos = (z, ax, ay) => { ax = ax == null ? fx : ax; ay = ay == null ? fy : ay; return { scale: z,
       x: Math.min(0, Math.max(W - W * z, W / 2 - ax * W * z)),
       y: Math.min(0, Math.max(Hh - IH * z, Hh / 2 - ay * IH * z)) }; };
     inn.style.transformOrigin = '0 0';
-    if (s.cont) c.tl.fromTo(fr, { opacity: 0 }, { opacity: 1, duration: 0.01, immediateRender: true }, t);  // set() não esconde antes de t  // mesma imagem do shot anterior: sem entrada, a câmera só desliza
+    if (s.cont) c.tl.fromTo(fr, { opacity: 0 }, { opacity: 1, duration: 0.01, immediateRender: true }, t);  // set() nêo esconde antes de t  // mesma imagem do shot anterior: sem entrada, a câmera só desliza
     else if (s.calm) c.tl.fromTo(fr, { opacity: 0 }, { opacity: 1, duration: 0.7, ease: 'sine.inOut' }, t);
     else c.tl.fromTo(fr, { opacity: 0, scale: 1.12 }, { opacity: 1, scale: 1, duration: 0.35, ease: 'power3.out' }, t);
     if (s.from) {  // parte de onde a câmera do shot anterior parou e desliza devagar até o novo foco

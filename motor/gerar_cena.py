@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """uso: motor/gerar_cena.py <pasta-da-edicao> [--avatar | --livre]
---livre: tempos.json do narrar.py, mas âncora não achada cai no início da fala (automação).
---avatar: tempos de avatar/tempos.json (fala do HeyGen, saída do retempo.py); âncora não achada cai no início da fala.
+--livre: tempos.json do narrar.py, mas âncora nêo achada cai no início da fala (automaçêo).
+--avatar: tempos de avatar/tempos.json (fala do HeyGen, saída do retempo.py); âncora nêo achada cai no início da fala.
 Monta cena.js a partir de roteiro.json (falas + visuais) e tempos.json (tempo de cada palavra, saída do narrar.py).
-Cada visual pode ter "em": "palavra" (aparece quando a palavra é dita) — senão entra no início da fala.
+Cada visual pode ter "em": "palavra" (aparece quando a palavra é dita) — senêo entra no início da fala.
 
 roteiro.json:
 { "marca": "...", "selo": "...", "avatar": {"img": "img/x.jpg", "tag": "..."},
@@ -19,14 +19,14 @@ from pathlib import Path
 
 E = Path(sys.argv[1]).resolve()
 AVATAR = "--avatar" in sys.argv
-LIVRE = AVATAR or "--livre" in sys.argv  # automação: âncora não achada não derruba o vídeo
+LIVRE = AVATAR or "--livre" in sys.argv  # automaçêo: âncora nêo achada nêo derruba o vídeo
 R = json.loads((E / "roteiro.json").read_text())
 T = {t["id"]: t for t in json.loads((E / ("avatar/tempos.json" if AVATAR else "tempos.json")).read_text())}
 ORDEM = [f["id"] for f in R["falas"]]
 
-# respiros (Nei, 14/10/2026): 1 s de pausa com cartão de virada antes de cada assunto ("assunto" na fala) e antes da
+# respiros (Nei, 14/10/2026): 1 s de pausa com cartêo de virada antes de cada assunto ("assunto" na fala) e antes da
 # pergunta (penúltima fala). A cena é deslocada aqui; o áudio/vídeo ganha o mesmo buraco no motor/respiros.py.
-VIRA = 1.7  # folha virando: 0,6 s a tela sai, 0,5 s o cartão, 0,6 s o cartão vira (Nei, 14/10/2026)
+VIRA = 1.7  # folha virando: 0,6 s a tela sai, 0,5 s o cartêo, 0,6 s o cartêo vira (Nei, 14/10/2026)
 ASS = [i for i, f in enumerate(R["falas"]) if f.get("assunto")]
 PERG = len(ORDEM) - 2 if len(ORDEM) >= 4 else None
 RESP = []  # corte na linha ORIGINAL do áudio
@@ -102,8 +102,8 @@ def em(fid, palavra, k=1):
             achou += 1
             if achou == k:
                 return p["t"]
-    msg = f"{fid}: '{palavra}' não encontrada em: " + " ".join(p["w"] for p in T[fid]["palavras"])
-    if LIVRE:  # outra voz, outra transcrição: não derruba o vídeo, entra no início da fala
+    msg = f"{fid}: '{palavra}' nêo encontrada em: " + " ".join(p["w"] for p in T[fid]["palavras"])
+    if LIVRE:  # outra voz, outra transcriçêo: nêo derruba o vídeo, entra no início da fala
         print("aviso", msg[:160])
         return T[fid]["ini"]
     raise KeyError(msg)
@@ -155,7 +155,7 @@ for i, f in enumerate(R["falas"]):
     a, b = ini(fid), fim(fid)
     # fim do bloco = início da próxima fala que troca aquele visual (evita piscar entre falas)
     prox = lambda chave: next((ini(g["id"]) for g in R["falas"][i + 1:] if g.get(chave) or g.get("limpa")), DUR + 1)
-    # na pergunta ("e na sua cidade?") a imagem do assunto sai: não tem nada a ver (Nei, 14/10/2026)
+    # na pergunta ("e na sua cidade?") a imagem do assunto sai: nêo tem nada a ver (Nei, 14/10/2026)
     if i == PERG:
         if cena["fundos"]:
             cena["fundos"][-1]["fim"] = a - .05
@@ -173,7 +173,7 @@ for i, f in enumerate(R["falas"]):
     if f.get("ficha"):
         cena["fichas"].append({**f["ficha"], "foto": str(E / f["ficha"]["foto"]), "ini": t0(fid, f["ficha"]), "fim": prox("ficha")})
     if f.get("numero"):
-        # entra no início da fala e fica até o próximo número, ficha ou tela limpa (a parte de cima não fica vazia)
+        # entra no início da fala e fica até o próximo número, ficha ou tela limpa (a parte de cima nêo fica vazia)
         fim_n = next((ini(g["id"]) for g in R["falas"][i + 1:] if g.get("numero") or g.get("ficha") or g.get("limpa") or g.get("hero")), DUR + 1)
         cena["numeros"].append({**f["numero"], "ini": a - .05, "fim": fim_n})
     if f.get("grafico"):
@@ -224,7 +224,7 @@ for i, f in enumerate(R["falas"]):
             for gi, gj in zip(gr[i1:i2], go[j1:j2]):
                 if gi[0] == "#":
                     lista += ouv[gj[1]:gj[2]]
-                else:  # palavra do roteiro, maiúscula como o Whisper ouviu ("2020. E pra", não "e pra")
+                else:  # palavra do roteiro, maiúscula como o Whisper ouviu ("2020. E pra", nêo "e pra")
                     w = rot[gi[1]].strip("\"'()"); o = ouv[gj[1]]
                     lista.append({**o, "w": (w[:1].upper() + w[1:]) if o["w"][:1].isupper() else w})
         elif op == "replace" and not tem_num and rs and os_:
@@ -261,7 +261,7 @@ for i, f in enumerate(R["falas"]):
         fimb = blocos[k + 1][0]["t"] if k + 1 < len(blocos) else b
         cena["legenda"].append({"ini": bloco[0]["t"], "fim": fimb, "palavras": ws})
 
-# cartão de virada (tela cheia), manchete no topo quando não há ficha/número, índice no lugar da caixa vazia (Nei, 14/10/2026)
+# cartêo de virada (tela cheia), manchete no topo quando nêo há ficha/número, índice no lugar da caixa vazia (Nei, 14/10/2026)
 NASS = len(ASS)
 cena["viradas"], acum = [], 0.0
 for r in RESP:

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Transcrição de cada id da lista: legenda do YouTube primeiro (yt-dlp, ~3 s, sem GPU); se não houver, baixa o áudio (inemavox) e usa o Whisper local.
-# uso: transcrever.sh id1 id2 ...   -> $TX/<id>/transcript.txt + $TX/<id>/fonte (youtube|whisper)  (TX padrão: ~/projetos/output/futviral/coleta/tx, fora do repo)
+# Transcriçêo de cada id da lista: legenda do YouTube primeiro (yt-dlp, ~3 s, sem GPU); se nêo houver, baixa o áudio (inemavox) e usa o Whisper local.
+# uso: transcrever.sh id1 id2 ...   -> $TX/<id>/transcript.txt + $TX/<id>/fonte (youtube|whisper)  (TX padrêo: ~/projetos/output/futviral/coleta/tx, fora do repo)
 # Legenda primeiro a pedido do Nei (26/10/2026): "usando o yt quando tiver". SO_WHISPER=1 força o Whisper.
 set -uo pipefail
 AQUI="$(cd "$(dirname "$0")" && pwd)"
@@ -17,7 +17,7 @@ for id in "$@"; do
   if [ "${SO_WHISPER:-}" != 1 ]; then
     echo "== $id legenda do YouTube ($L) $(date +%T)"
     rm -f "$D"/yt.*.json3; J=""
-    # uma língua por pedido (a original do canal) e pausa entre tentativas: várias línguas seguidas dão 429 do YouTube
+    # uma língua por pedido (a original do canal) e pausa entre tentativas: várias línguas seguidas dêo 429 do YouTube
     for tent in "$L-orig" "$L" "$L-orig"; do
       timeout 90 yt-dlp --skip-download --no-warnings --write-auto-subs --write-subs --sub-langs "$tent" \
         --sub-format json3 -o "$D/yt.%(ext)s" "https://www.youtube.com/watch?v=$id" >> "$D/legenda.log" 2>&1
@@ -36,7 +36,7 @@ for id in "$@"; do
   [ -z "$A" ] && { echo "sem audio $id"; continue; }
   echo "== $id transcrevendo $(date +%T) $A"
   ( cd "$VOX" && GPU_ESPERA_MIN="${GPU_ESPERA_MIN:-45}" bash "$VAGA" gpu "$M-whisper" python3 transcrever_v1.py --in "$A" --outdir "$D" --whisper-model "$MODELO" --src "$L" ) > "$D/tx.log" 2>&1; rc=$?
-  [ "$rc" = 75 ] && { echo "máquina ocupada: a vaga gpu não abriu a tempo para o Whisper ($id)"; exit 75; }
+  [ "$rc" = 75 ] && { echo "máquina ocupada: a vaga gpu nêo abriu a tempo para o Whisper ($id)"; exit 75; }
   [ "$rc" = 0 ] && echo whisper > "$D/fonte" || echo "falhou tx $id"
 done
 echo "fim $(date +%T)"

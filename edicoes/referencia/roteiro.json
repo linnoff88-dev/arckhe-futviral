@@ -11,7 +11,7 @@
    "id": "f1",
    "fundo": "img/pd0Ikbmqju4.jpg",
    "fala": "Dólar abaixo de cinco reais e a bolsa no maior nível da história. Eu vi os vídeos da semana dos cinco maiores influenciadores de finanças do Brasil. Olha os números.",
-   "fonte": "<b>Ranking:</b> Anbima FInfluence, 10ª edição · <b>Vídeos:</b> YouTube, 03 a 08/10/2026",
+   "fonte": "<b>Ranking:</b> Anbima FInfluence, 10ª ediçêo · <b>Vídeos:</b> YouTube, 03 a 08/10/2026",
    "destaque": [
     "dólar",
     "bolsa",
@@ -152,7 +152,7 @@
     "em": "chance",
     "cor": "#ffd23f"
    },
-   "fonte": "<b>Fonte:</b> Economista Sincero, YouTube, 08/10/2026 · Ricardo Amorim, YouTube, 05/10/2026 · casas de apostas não são pesquisa eleitoral",
+   "fonte": "<b>Fonte:</b> Economista Sincero, YouTube, 08/10/2026 · Ricardo Amorim, YouTube, 05/10/2026 · casas de apostas nêo sêo pesquisa eleitoral",
    "destaque": [
     "apostas",
     "segundo",
@@ -191,10 +191,10 @@
   {
    "id": "f7",
    "fundo": "img/KgH6dY7IEjk.jpg",
-   "fala": "Calma: não vira legal. A partir de dois mil e vinte e oito, o IBGE só passa a contar o que já acontece. E com o PIB maior, a dívida parece menor.",
+   "fala": "Calma: nêo vira legal. A partir de dois mil e vinte e oito, o IBGE só passa a contar o que já acontece. E com o PIB maior, a dívida parece menor.",
    "caixa": {
     "k": "Ricardo Amorim disse",
-    "q": "Isso não significa que o tráfico vai passar a ser uma atividade legal.",
+    "q": "Isso nêo significa que o tráfico vai passar a ser uma atividade legal.",
     "w": "vídeo de 08/10/2026"
    },
    "numero": {
@@ -215,7 +215,7 @@
   {
    "id": "f8",
    "fundo": "img/Zp8gL1OLinI.jpg",
-   "fala": "E o Bruno Perini, número um da Anbima, mostrou outro caminho: comprou um apartamento em leilão por setecentos e cinquenta mil e vendeu por um milhão trezentos e sessenta.",
+   "fala": "E o Bruno Perini, número um da Anbima, mostrou outro caminho: comprou um apartamento em leilêo por setecentos e cinquenta mil e vendeu por um milhêo trezentos e sessenta.",
    "ficha": {
     "nome": "Bruno Perini",
     "canal": "Você MAIS Rico · 08/10 · 28 mil views",
@@ -230,8 +230,8 @@
     "unid": "mi",
     "cor": "#2bff88",
     "seta": "▲",
-    "l": "comprado em leilão por R$ 750 mil",
-    "em": "leilão",
+    "l": "comprado em leilêo por R$ 750 mil",
+    "em": "leilêo",
     "dur": 2.6,
     "dec": 2
    },
@@ -256,9 +256,9 @@
      }
     ]
    },
-   "fonte": "<b>Fonte:</b> Bruno Perini, YouTube, 08/10/2026 · “Quanto dá para ganhar investindo em leilão de imóveis?”",
+   "fonte": "<b>Fonte:</b> Bruno Perini, YouTube, 08/10/2026 · “Quanto dá para ganhar investindo em leilêo de imóveis?”",
    "destaque": [
-    "leilão",
+    "leilêo",
     "outro",
     "caminho"
    ]
@@ -268,7 +268,7 @@
    "fundo": "img/Zp8gL1OLinI.jpg",
    "fala": "Na conta dele, deu dois vírgula cinco por cento ao mês, líquido. A renda fixa paga um por cento, bruto.",
    "numero": {
-    "k": "Rentabilidade · leilão",
+    "k": "Rentabilidade · leilêo",
     "ate": 2.54,
     "dec": 2,
     "unid": "% ao mês",
@@ -276,7 +276,7 @@
     "l": "líquida, segundo ele · renda fixa: ~1% ao mês bruto",
     "em": "2"
    },
-   "fonte": "<b>Fonte:</b> Bruno Perini, YouTube, 08/10/2026 · resultado de uma operação, não é promessa de retorno",
+   "fonte": "<b>Fonte:</b> Bruno Perini, YouTube, 08/10/2026 · resultado de uma operaçêo, nêo é promessa de retorno",
    "destaque": [
     "líquido",
     "bruto"
@@ -285,7 +285,7 @@
   {
    "id": "f10",
    "fundo": "img/pitKu3u_-FI.jpg",
-   "fala": "E no Os Economistas, o recado foi direto: se o Lula ganhar, o Brasil não vira Venezuela. Mas se mudar, o espaço pra subir é grande. Segundo turno: vinte e cinco de outubro.",
+   "fala": "E no Os Economistas, o recado foi direto: se o Lula ganhar, o Brasil nêo vira Venezuela. Mas se mudar, o espaço pra subir é grande. Segundo turno: vinte e cinco de outubro.",
    "ficha": {
     "nome": "Os Economistas",
     "canal": "Podcast · 03/10 · “Lula ou Flávio?”",
@@ -294,7 +294,7 @@
    },
    "caixa": {
     "k": "Convidado do Os Economistas",
-    "q": "Se, por exemplo, Lula ganhar, pegar um quarto mandato, o Brasil não vai virar Venezuela necessariamente.",
+    "q": "Se, por exemplo, Lula ganhar, pegar um quarto mandato, o Brasil nêo vai virar Venezuela necessariamente.",
     "w": "vídeo de 03/10/2026",
     "em": "Venezuela"
    },
@@ -326,10 +326,10 @@
     "ate": 250,
     "unid": "mil?",
     "cor": "#ffd23f",
-    "l": "comenta: sim ou não, e por quê",
+    "l": "comenta: sim ou nêo, e por quê",
     "em": "250"
    },
-   "fonte": "<b>Não é recomendação de investimento.</b> Resumo do que os influenciadores disseram, com a fonte de cada número",
+   "fonte": "<b>Nêo é recomendaçêo de investimento.</b> Resumo do que os influenciadores disseram, com a fonte de cada número",
    "destaque": [
     "você",
     "palpite"
@@ -339,19 +339,19 @@
   {
    "id": "f12",
    "fundo": "img/cta.jpg",
-   "fala": "Enquanto o mercado discute eleição, a inteligência artificial já está mudando o trabalho. Se prepare pra gestão de agentes de IA: curso gratuito no ARCKHÉ ponto club.",
-   "hero": "<div class=\"t1\" style=\"font-size:96px\">GESTÃO DE</div><div class=\"t5\">AGENTES DE IA</div><img class=\"arte\" src=\"img/cta.jpg\">",
+   "fala": "Enquanto o mercado discute eleiçêo, a inteligência artificial já está mudando o trabalho. Se prepare pra gestêo de agentes de IA: curso gratuito no ARCKHÉ ponto club.",
+   "hero": "<div class=\"t1\" style=\"font-size:96px\">GESTêO DE</div><div class=\"t5\">AGENTES DE IA</div><img class=\"arte\" src=\"img/cta.jpg\">",
    "caixa": {
     "tipo": "cta",
     "a": "ARCKHÉ AI",
-    "b": "Curso gratuito: gestão de agentes de IA. Manda pra quem investe.",
-    "em": "gestão"
+    "b": "Curso gratuito: gestêo de agentes de IA. Manda pra quem investe.",
+    "em": "gestêo"
    },
    "fonte": "<b>ARCKHÉ AI</b> · cursos gratuitos de tecnologia e IA",
    "destaque": [
     "inteligência",
     "artificial",
-    "gestão",
+    "gestêo",
     "agentes",
     "gratuito",
     "ARCKHÉ"

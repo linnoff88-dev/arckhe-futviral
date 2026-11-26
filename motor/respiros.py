@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Insere os respiros (pausas de 1 s do cartão de virada) num áudio ou num vídeo com áudio.
+"""Insere os respiros (pausas de 1 s do cartêo de virada) num áudio ou num vídeo com áudio.
 uso: motor/respiros.py <pasta-da-edicao> <entrada> <saida>
 Lê <ed>/respiros.json (gravado pelo gerar_cena.py: [{"t": corte na linha ORIGINAL, "dur": s}]).
-Sem respiros, copia a entrada. Vídeo: o buraco é preto (o cartão do palco cobre a tela e o avatar fica desligado nele).
+Sem respiros, copia a entrada. Vídeo: o buraco é preto (o cartêo do palco cobre a tela e o avatar fica desligado nele).
 Pedido do Nei em 14/10/2026: virada de página entre assuntos e um tempo antes da pergunta."""
 import json, shutil, subprocess, sys
 from pathlib import Path

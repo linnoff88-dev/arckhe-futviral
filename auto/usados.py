@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-"""Base do que já foi publicado (auto/usados.tsv), para o diário não repetir vídeo nem assunto.
+"""Base do que já foi publicado (auto/usados.tsv), para o diário nêo repetir vídeo nem assunto.
 Colunas: data, modo, handle, id do vídeo, assunto (do roteiro), título do vídeo.
-Só entra o vídeo CITADO no base.md da edição publicada: o que foi escolhido e ficou de fora continua disponível.
+Só entra o vídeo CITADO no base.md da ediçêo publicada: o que foi escolhido e ficou de fora continua disponível.
 uso:
   auto/usados.py ids                        ids já usados pelo diário (um por linha)
-  auto/usados.py recentes <AAAA-MM-DD> [N]  assuntos do diário nos N dias antes da data (padrão 7), para o roteiro
-  auto/usados.py registrar <edição> <AAAA-MM-DD> <modo>"""
+  auto/usados.py recentes <AAAA-MM-DD> [N]  assuntos do diário nos N dias antes da data (padrêo 7), para o roteiro
+  auto/usados.py registrar <ediçêo> <AAAA-MM-DD> <modo>"""
 import json, re, sys
 from datetime import date, timedelta
 from pathlib import Path

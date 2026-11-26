@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Contrato texto -> arquivos dos virais; nenhuma ferramenta de escrita/publicação no modelo."""
+"""Contrato texto -> arquivos dos virais; nenhuma ferramenta de escrita/publicaçêo no modelo."""
 import argparse, ast, json, re, sys, tempfile
 from pathlib import Path
 from ia_motor import executar
@@ -24,7 +24,7 @@ def salvar(resposta, pasta):
             valor=json.dumps(obj,ensure_ascii=False,indent=2)
         if not isinstance(valor,str) or not valor.strip(): raise ValueError('Arquivo vazio/inválido: '+nome)
         if nome == 'base.md':
-            # JSON às vezes traz \n duplamente escapado dentro da citação.
+            # JSON às vezes traz \n duplamente escapado dentro da citaçêo.
             # Na tabela é espaço; o checar.py continua exigindo a fonte literal.
             valor = valor.replace('\\n', ' ').replace('\\r', ' ').replace('\\t', ' ')
         prontos[nome]=valor+'\n'
@@ -47,7 +47,7 @@ def entradas(pedido,pasta,tx):
     if not ids or any(not re.fullmatch(r'[A-Za-z0-9_-]+',v) for v in ids): raise ValueError('Lista de transcrições inválida')
     for vid in ids:
         q=tx/vid/'transcript.txt'
-        if not q.is_file(): raise ValueError('Transcrição ausente: '+vid)
+        if not q.is_file(): raise ValueError('Transcriçêo ausente: '+vid)
         anexar(q)
     # Referências e esquema presentes no pedido já expandido, só dentro do próprio projeto.
     for path in dict.fromkeys(re.findall(r'`(/[^`\n]+\.(?:json|md|py))`',pedido)):
@@ -58,7 +58,7 @@ def entradas(pedido,pasta,tx):
             if doc: textos.append(f'\n<esquema caminho="{q}">\n{doc}\n</esquema>')
         else: anexar(q)
     for nome in ['roteiro.json','base.md']:
-        anexar(pasta/nome)  # Em correção, preservar a resposta anterior e ajustar os erros do portão.
+        anexar(pasta/nome)  # Em correçêo, preservar a resposta anterior e ajustar os erros do portêo.
     return ''.join(textos)
 
 def main():
@@ -66,7 +66,7 @@ def main():
     ap.add_argument('etapa'); ap.add_argument('pedido'); ap.add_argument('--tx',required=True,type=Path)
     a=ap.parse_args(); pasta=Path.cwd()
     prompt=a.pedido+entradas(a.pedido,pasta,a.tx)
-    prompt+='''\n\nCONTRATO FINAL DO EXECUTOR: todos os dados necessários estão anexados. Não leia/escreva arquivos nem execute comandos, não pesquise na internet nem use APIs. As instruções anteriores de gravar arquivos serão cumpridas pelo script, não pelo modelo. Responda SOMENTE um objeto JSON: {"arquivos":{"base.md":"conteúdo completo","roteiro.json":{...objeto completo...},"legenda.txt":"conteúdo completo","sugestao.txt":"opcional"}}. Se não houver pauta, responda {"arquivos":{"SEM_PAUTA.txt":"motivo"}}. Nunca misture sem-pauta com roteiro. Nenhum outro arquivo é permitido. Não escreva crases ou explicações fora do JSON.'''
+    prompt+='''\n\nCONTRATO FINAL DO EXECUTOR: todos os dados necessários estêo anexados. Nêo leia/escreva arquivos nem execute comandos, nêo pesquise na internet nem use APIs. As instruções anteriores de gravar arquivos serêo cumpridas pelo script, nêo pelo modelo. Responda SOMENTE um objeto JSON: {"arquivos":{"base.md":"conteúdo completo","roteiro.json":{...objeto completo...},"legenda.txt":"conteúdo completo","sugestao.txt":"opcional"}}. Se nêo houver pauta, responda {"arquivos":{"SEM_PAUTA.txt":"motivo"}}. Nunca misture sem-pauta com roteiro. Nenhum outro arquivo é permitido. Nêo escreva crases ou explicações fora do JSON.'''
     resposta=executar(a.etapa,prompt,pasta)
     print(json.dumps({'arquivos_salvos':salvar(resposta,pasta)},ensure_ascii=False))
 if __name__=='__main__':

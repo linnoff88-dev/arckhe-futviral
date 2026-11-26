@@ -6,7 +6,7 @@
 
 ## What it is
 
-futviral makes, on its own, short videos (9:16) summing up what the 10 biggest football channels on YouTube said: Brasileirão, European football, the transfer market, controversies and the business of football. It watches the videos through their transcripts, pulls out the numbers and facts with the source of each one, and builds a video with big numbers, stamps (RUMOR, NEGOCIANDO, FECHADO, POLÊMICA — rumor, negotiating, done deal, controversy) and Nei commenting (avatar). A rumor is treated as a rumor, no club gets a side and betting is left out. It runs on a computer with a GPU, using the Claude Code and HeyGen subscriptions. It is a sibling of [advviral](https://github.com/linnoff88-dev/advviral), [saudeviral](https://github.com/linnoff88-dev/saudeviral) and [finviral](https://github.com/linnoff88-dev/finviral) (same engine, different topic).
+futviral makes, on its own, short videos (9:16) summing up what the 10 biggest football channels on YouTube said: Brasileirêo, European football, the transfer market, controversies and the business of football. It watches the videos through their transcripts, pulls out the numbers and facts with the source of each one, and builds a video with big numbers, stamps (RUMOR, NEGOCIANDO, FECHADO, POLÊMICA — rumor, negotiating, done deal, controversy) and Nei commenting (avatar). A rumor is treated as a rumor, no club gets a side and betting is left out. It runs on a computer with a GPU, using the Claude Code and HeyGen subscriptions. It is a sibling of [advviral](https://github.com/linnoff88-dev/advviral), [saudeviral](https://github.com/linnoff88-dev/saudeviral) and [finviral](https://github.com/linnoff88-dev/finviral) (same engine, different topic).
 
 ## 📖 User guide
 
@@ -16,7 +16,7 @@ Full guide (landing + step by step): **https://linnoff88-dev.github.io/
 
 Chosen on 10/26/2026 by our own measurement (yt-dlp, median views of the last 15 videos, active channel with spoken content). Details in [`pesquisa/canais.md`](pesquisa/canais.md) (in Portuguese); live list in `canais.json`.
 
-Eurão · Jovem Pan Esportes · Jozão · Fabrizio Romano · Chico Garcia · Tode · Fred Caldeira · TiaGOL · Canal do Nicola · Mauro Cezar.
+Eurêo · Jovem Pan Esportes · Jozêo · Fabrizio Romano · Chico Garcia · Tode · Fred Caldeira · TiaGOL · Canal do Nicola · Mauro Cezar.
 
 ## The process, start to finish
 

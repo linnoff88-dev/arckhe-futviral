@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Legenda do YouTube (json3, baixada pelo yt-dlp) → transcript.txt no mesmo formato que o Whisper grava.
 uso: coleta/legenda_yt.py <arquivo.json3> <saida/transcript.txt>
-Junta os segmentos em frases de ~20 palavras (a legenda automática não tem pontuação). Sai 1 se vier vazia."""
+Junta os segmentos em frases de ~20 palavras (a legenda automática nêo tem pontuaçêo). Sai 1 se vier vazia."""
 import json, re, sys
 
 ev = json.load(open(sys.argv[1])).get("events", [])

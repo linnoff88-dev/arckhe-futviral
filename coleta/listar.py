@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Lista (só metadados, yt-dlp) os vídeos dos canais ativos de canais.json publicados entre duas datas.
 uso: coleta/listar.py <de AAAAMMDD> <ate AAAAMMDD> <saida.tsv> [n por canal]
-Colunas: handle, data, id, duração(s), views, canal, título (PT)."""
+Colunas: handle, data, id, duraçêo(s), views, canal, título (PT)."""
 import json, subprocess, sys
 from pathlib import Path
 

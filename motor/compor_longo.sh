@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Vídeo LONGO 16:9: renderiza motor/longo.html (cena-longo.js) e mistura com a voz.
 # uso: motor/compor_longo.sh <pasta-da-edicao> <saida.mp4> [--narracao]
-#   padrão     : avatar/avatar.mp4 do HeyGen no canto (1478,36 · 406×228, cantos arredondados) + voz dele
+#   padrêo     : avatar/avatar.mp4 do HeyGen no canto (1478,36 · 406×228, cantos arredondados) + voz dele
 #   --narracao : prévia sem HeyGen — foto no canto (já no palco) + narracao.wav (chatterbox, voz do Nei)
-# Voz normalizada a −14 LUFS; música baixa com ducking; fade final SÓ na música (a voz do CTA não cai).
+# Voz normalizada a −14 LUFS; música baixa com ducking; fade final SÓ na música (a voz do CTA nêo cai).
 set -euo pipefail
 AQUI="$(cd "$(dirname "$0")" && pwd)"
 E="$(cd "$1" && pwd)"; SAIDA="$2"; MODO="${3:-}"

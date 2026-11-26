@@ -11,9 +11,9 @@ roteiro.json (longo):
   "falas": [ {"id": "f1", "cap": "c0", "fala": "...", "fonte": "<b>Canal</b>, YouTube, 08/10/2026", "destaque": ["..."],
               "shots": [ {"type": "hook", "at": "@start", ...}, {"type": "numero", "at": "deixa falada", ...} ] } ] }
 
-Tempos: "at" e todo campo "*_at" (inclusive dentro de items/lines/left/right) são DEIXAS — trecho literal de 1 a 5
-palavras da própria fala; "trecho#2" = 2ª ocorrência; "@start" só no hook da 1ª fala. Deixa não achada = aviso e
-cai no início da fala (a automação não para). Shots: os do explicavideo v2 (AUTHORING.md) + ficha, numero, citacao,
+Tempos: "at" e todo campo "*_at" (inclusive dentro de items/lines/left/right) sêo DEIXAS — trecho literal de 1 a 5
+palavras da própria fala; "trecho#2" = 2ª ocorrência; "@start" só no hook da 1ª fala. Deixa nêo achada = aviso e
+cai no início da fala (a automaçêo nêo para). Shots: os do explicavideo v2 (AUTHORING.md) + ficha, numero, citacao,
 grafico, carimbo (motor/v2/futviral-v2.js).
 """
 import difflib, json, re, sys, unicodedata
@@ -51,7 +51,7 @@ def deixa(fid, cue):
     par = difflib.get_close_matches(alvo[0] if alvo else "", ws, n=1, cutoff=0.8)
     if par:
         return T[fid]["palavras"][ws.index(par[0])]["t"]
-    avisos.append(f"{fid}: deixa '{cue}' não achada")
+    avisos.append(f"{fid}: deixa '{cue}' nêo achada")
     return T[fid]["ini"]
 
 
@@ -110,7 +110,7 @@ for k, (cid, fs) in enumerate(grupos):
             if r["type"] == "statement" and r.get("strike_at") is not None and "~~" not in r.get("text", ""):
                 r["text"] = f"~~{r['text']}~~"  # pediu riscado sem marcar: risca a frase toda (nunca deixa a frase errada de pé)
             if r["type"] == "statement" and r.get("strike_at") is not None:
-                r["strike_at"] = min(r["strike_at"], r["at"] + 1.2)  # frase errada não fica mais de ~1 s sem o risco
+                r["strike_at"] = min(r["strike_at"], r["at"] + 1.2)  # frase errada nêo fica mais de ~1 s sem o risco
             shots.append(r)
     capa = bool(shots and shots[0].get("capa"))  # o v2 sempre desenha o cabeçalho: na cena da capa ele vai vazio
     cena["cenas"].append({"lang": "pt", "n": k + 1, "total": len(grupos), "chapter": "" if capa else cap.get("kicker", ""),

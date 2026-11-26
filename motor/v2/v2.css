@@ -203,7 +203,7 @@ html,body{margin:0;background:var(--bg);overflow:hidden}
 .hk-t .hl{display:inline-block;color:var(--amber)}
 .hk-s{position:absolute;left:130px;width:1250px;top:820px;font-family:"MontX";font-size:40px;color:#e8eefc}
 .md-frame{position:absolute;overflow:hidden;border-radius:26px;border:3px solid rgba(255,182,56,.7);box-shadow:0 30px 80px rgba(0,0,0,.6);background:#0b1020}
-/* contêiner com a proporção da própria imagem: destaques em % caem no mesmo ponto da imagem */
+/* contêiner com a proporçêo da própria imagem: destaques em % caem no mesmo ponto da imagem */
 .md-in{position:absolute;left:0;top:0;width:100%}
 .md-img{width:100%;height:auto;display:block}
 .md-hl{position:absolute;border:6px solid var(--amber);border-radius:14px;box-shadow:0 0 0 9999px rgba(3,5,10,.35),0 0 30px rgba(255,182,56,.7)}

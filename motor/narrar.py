@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """uso: motor/narrar.py <pasta-da-edicao> [atempo] [f1,f2 só para teste]
-Grava as falas do roteiro.json com a voz do Nei (motor do cardshorts: confere por transcrição e corta o fim),
+Grava as falas do roteiro.json com a voz do Nei (motor do cardshorts: confere por transcriçêo e corta o fim),
 junta com pausa curta e grava o tempo de cada palavra em tempos.json. Mesmo método do eventosextremospub."""
 import json, subprocess, sys
 from pathlib import Path
@@ -10,8 +10,8 @@ import cardshorts as cs
 
 E = Path(sys.argv[1]).resolve()
 PAD = 0.2
-TEMPO = float(sys.argv[2]) if len(sys.argv) > 2 else 1.12  # atempo (≤1,15 para não chiar)
-VOZ = dict(cs.VOZ_PADRAO)  # 0.6/0.6: a 0.85/0.35 chiava o "s" (lição 08/10)
+TEMPO = float(sys.argv[2]) if len(sys.argv) > 2 else 1.12  # atempo (≤1,15 para nêo chiar)
+VOZ = dict(cs.VOZ_PADRAO)  # 0.6/0.6: a 0.85/0.35 chiava o "s" (liçêo 08/10)
 SO = sys.argv[3].split(",") if len(sys.argv) > 3 else None
 
 falas = [{"id": f["id"], "fala": f["fala"]} for f in json.loads((E / "roteiro.json").read_text())["falas"]
@@ -35,6 +35,6 @@ for c in r["cenas"]:
 (build / "lista.txt").write_text("\n".join(lista))
 subprocess.run(["ffmpeg", "-y", "-v", "error", "-f", "concat", "-safe", "0", "-i", build / "lista.txt", "-c:a", "pcm_s16le", E / "narracao.wav"], check=True)
 (E / "tempos.json").write_text(json.dumps(tempos, ensure_ascii=False, indent=1))
-print(f"narração {t0:.1f} s -> {E/'narracao.wav'}")
+print(f"narraçêo {t0:.1f} s -> {E/'narracao.wav'}")
 for t in tempos:
     print(t["id"], t["ini"], "→", t["fim"], " ".join(p["w"] for p in t["palavras"]))

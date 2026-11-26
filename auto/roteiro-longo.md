@@ -3,16 +3,16 @@
 Você monta o roteiro de um vídeo **16:9 de 5 a 7 minutos** do **futviral**, para o canal Radar Viral (lives24) no YouTube:
 **"A semana explicada"**. O curto 9:16 da mesma rodada dá só o placar; este vídeo EXPLICA cada assunto: o que
 cada influenciador disse, o que isso quer dizer, o contexto e os números com fonte. O Nei (avatar) apresenta.
-Trabalhe só com os arquivos abaixo. Não use a internet nem outra API.
+Trabalhe só com os arquivos abaixo. Nêo use a internet nem outra API.
 
 ## Entrada
-- Pasta da edição: `{ED}`. Escreva nela apenas os arquivos pedidos.
-- Vídeos do período: `{ED}/videos.tsv` (handle, data, id, duração em s, views, canal, título).
+- Pasta da ediçêo: `{ED}`. Escreva nela apenas os arquivos pedidos.
+- Vídeos do período: `{ED}/videos.tsv` (handle, data, id, duraçêo em s, views, canal, título).
 - Transcrições: `{TX}/<id>/transcript.txt`, só dos ids em `{ED}/transcritos.txt`.
 - Canais e ranking: `{RAIZ}/canais.json`.
 - Esquema do roteiro e das deixas: docstring de `{RAIZ}/motor/gerar_cena_longo.py`.
 - Tipos de shot: tabela "Primitivos" de `~/projetos/explicavideos/engine/v2/AUTHORING.md` + os de dados abaixo.
-- Curto da mesma semana (para não contradizer): `{CURTO}/roteiro.json`, se existir.
+- Curto da mesma semana (para nêo contradizer): `{CURTO}/roteiro.json`, se existir.
 
 ## Modo
 {INSTRUCAO_MODO}
@@ -21,18 +21,18 @@ Trabalhe só com os arquivos abaixo. Não use a internet nem outra API.
 Grave TODOS estes arquivos, ou só o `SEM_PAUTA.txt`.
 
 ### 1. `{ED}/base.md`
-Tabela `| Número ou fato usado | Quem disse | Vídeo | Data | Trecho da transcrição |`, uma linha por número OU fato
-explicado no vídeo (no longo são de 12 a 30 linhas). **Vídeo** = id do videos.tsv. **Trecho** entre aspas retas,
+Tabela `| Número ou fato usado | Quem disse | Vídeo | Data | Trecho da transcriçêo |`, uma linha por número OU fato
+explicado no vídeo (no longo sêo de 12 a 30 linhas). **Vídeo** = id do videos.tsv. **Trecho** entre aspas retas,
 cópia LITERAL de um pedaço contínuo do transcript.txt desse id, de 6 a 30 palavras, sem editar nem juntar pedaços.
-Um script confere cada trecho; se algum não estiver no transcript, o vídeo é descartado.
+Um script confere cada trecho; se algum nêo estiver no transcript, o vídeo é descartado.
 
 ### 2. `{ED}/roteiro.json` (formato longo — ver a docstring)
 - `marca`: "<b>RADAR VIRAL</b> · RADAR FUTEBOL". `avatar`: `{"img": "img/avatar-teste.jpg"}`.
 - `capitulos`: `c0` = abertura (sem `nome`); depois **um capítulo por influenciador com assunto forte** (3 a 5
-  capítulos; quem não disse nada relevante fica de fora); por último `cz` = fecho (sem `nome`). Cada capítulo de
+  capítulos; quem nêo disse nada relevante fica de fora); por último `cz` = fecho (sem `nome`). Cada capítulo de
   influenciador tem `nome`, `kicker` (o `rk` do canais.json, ex.: "MERCADO DA BOLA"), `sub` ("Canal · dd/mm"),
   `foto` `img/<id>.jpg`, `titulo` (o assunto em até 40 caracteres) e `takeaway` (frase de até 60 caracteres com
-  `**destaque**`: a conclusão do capítulo).
+  `**destaque**`: a conclusêo do capítulo).
 - `falas`: de 30 a 60 falas, **de 800 a 1000 palavras no total** (≈ 5,5 a 7 min). Cada fala tem `id` (f1, f2…), `cap`,
   `fala`, `shots` (1 ou 2), `fonte` quando cita alguém ("<b>Fonte:</b> Canal, YouTube, dd/mm/aaaa · “título curto”")
   e `destaque` (palavras para a legenda em âmbar).
@@ -48,21 +48,21 @@ Um script confere cada trecho; se algum não estiver no transcript, o vídeo é 
 
 **Cada capítulo de influenciador (5 a 10 falas, 120 a 200 palavras):**
 1. Abre com o nome falado ("Agora, o Canal do Nicola.") e o shot `ficha`.
-2. O QUE ELE DISSE: shot `citacao` com o trecho literal (pode encurtar com "…"; o texto da citação TEM de estar no
+2. O QUE ELE DISSE: shot `citacao` com o trecho literal (pode encurtar com "…"; o texto da citaçêo TEM de estar no
    base.md) e, se houver, `numero` com o número principal.
-3. O QUE ISSO QUER DIZER: a explicação, em linguagem simples, usando SÓ o que está nas transcrições (o raciocínio, os
-   dados e os exemplos que ele mesmo deu). Pode definir termo básico (o que é usucapião, BPC, justa causa). Nada de fato ou
+3. O QUE ISSO QUER DIZER: a explicaçêo, em linguagem simples, usando SÓ o que está nas transcrições (o raciocínio, os
+   dados e os exemplos que ele mesmo deu). Pode definir termo básico (o que é usucapiêo, BPC, justa causa). Nada de fato ou
    número de fora das transcrições. Visuais: `compare`, `timeline`, `bullets`, `flow`, `statement`, `grafico` (só
    série dita no vídeo), `carimbo` com `"keep": true` (POLÊMICA / RUMOR / NEGOCIANDO / FECHADO / RECORDE / ZONA DE PERIGO).
 4. Fecha com uma frase-síntese (é o `takeaway` do capítulo).
-- Divergência entre eles (um diz que dá, outro diz que não dá) é ouro: mostre com `compare`, sempre atribuído.
+- Divergência entre eles (um diz que dá, outro diz que nêo dá) é ouro: mostre com `compare`, sempre atribuído.
 
 **Fecho (cz, 3 a 5 falas):**
 - Resumo em `bullets` (um item por capítulo).
 - Gancho de comentário: pergunta sobre o tema ("E você? … Comente aqui."), com `fonte` "<b>Rumor só vale quando o
   clube confirma.</b> Resumo do que os canais disseram, com a fonte de cada fato".
-- Última fala: CTA — ponte curta do tema para a IA + "Se prepare pra gestão de agentes de IA com o curso gratuito do ARCKHÉ
-  ponto club." O CTA é SEMPRE só o ARCKHÉ AI: não citar canal do YouTube, "inscreva-se" nem outro destino. Shots: `{"type":"media","src":"img/cta.jpg","calm":true,"label":"**ARCKHÉ AI** · gestão de agentes de IA"}`
+- Última fala: CTA — ponte curta do tema para a IA + "Se prepare pra gestêo de agentes de IA com o curso gratuito do ARCKHÉ
+  ponto club." O CTA é SEMPRE só o ARCKHÉ AI: nêo citar canal do YouTube, "inscreva-se" nem outro destino. Shots: `{"type":"media","src":"img/cta.jpg","calm":true,"label":"**ARCKHÉ AI** · gestêo de agentes de IA"}`
   e `keyword` "ARCKHÉ AI".
 
 **Shots — regras:**
@@ -82,15 +82,15 @@ Um script confere cada trecho; se algum não estiver no transcript, o vídeo é 
 
 **Texto falado:** tom do Nei, tratando por "você" (nunca "tu"/"teu"), frases curtas; TODOS os números e anos por extenso ("trinta por cento", "dois mil e vinte e seis"); siglas comuns em maiúsculas (CBF, VAR, SAF, Fifa, Uefa);
 sem emoji. **Futebol (regras duras):**
-  - Relatar e atribuir sempre ("segundo ele", "o Nicola apurou"). Nunca vira opinião do Nei.
-  - Rumor é rumor: contratação, saída ou demissão só "fechada" se ELE disse que o clube confirmou; senão é negociação ou rumor.
-  - Sem torcer por clube; canal que puxa para um time é atribuído. Sem aposta: nada de bet, odd, palpite ou cotação (a conferência reprova).
+  - Relatar e atribuir sempre ("segundo ele", "o Nicola apurou"). Nunca vira opiniêo do Nei.
+  - Rumor é rumor: contrataçêo, saída ou demissêo só "fechada" se ELE disse que o clube confirmou; senêo é negociaçêo ou rumor.
+  - Sem torcer por clube; canal que puxa para um time é atribuído. Sem aposta: nada de bet, odd, palpite ou cotaçêo (a conferência reprova).
   - Placar, tabela, valor, salário, multa e data só entram se estiverem no transcript, iguais ao que ele disse. Fabrizio Romano: trecho em inglês literal, fala traduzida e atribuída.
-  - Caso policial ou acusação: só o que é público e atribuído, ninguém é culpado antes de condenação. Lance, gol, imagem de jogo e escudo de clube NÃO entram (direito de transmissão).
+  - Caso policial ou acusaçêo: só o que é público e atribuído, ninguém é culpado antes de condenaçêo. Lance, gol, imagem de jogo e escudo de clube NêO entram (direito de transmissêo).
 
 ### 3. `{ED}/legenda.txt`
-Linha 1: título para o YouTube (até 70 caracteres, gancho, pode ter número). Linhas 2–6: descrição curta com um
+Linha 1: título para o YouTube (até 70 caracteres, gancho, pode ter número). Linhas 2–6: descriçêo curta com um
 item por capítulo ("Canal do Nicola: a novela do técnico"). Última linha: "Rumor só vale quando o clube confirma."
 
 ### Sem pauta
-Se a semana não tiver pelo menos 3 assuntos fortes, grave só `{ED}/SEM_PAUTA.txt` com o motivo.
+Se a semana nêo tiver pelo menos 3 assuntos fortes, grave só `{ED}/SEM_PAUTA.txt` com o motivo.
